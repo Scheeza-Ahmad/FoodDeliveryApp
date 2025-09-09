@@ -11,7 +11,7 @@ class Forgetpassword extends StatelessWidget {
   Widget build(BuildContext context) {
     final namecontroller = TextEditingController();
     final passwordcontroller = TextEditingController();
-
+    final confirmpasswordcontroller = TextEditingController();
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
@@ -113,7 +113,7 @@ class Forgetpassword extends StatelessWidget {
                         ),
                       ),
                       Inputfield(
-                        cont: passwordcontroller,
+                        cont: confirmpasswordcontroller,
                         type: TextInputType.visiblePassword,
                         hint: 'Confirm password',
                         option: true,

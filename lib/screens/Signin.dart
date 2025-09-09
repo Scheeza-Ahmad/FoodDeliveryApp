@@ -11,6 +11,8 @@ class Signin extends StatelessWidget {
   Widget build(BuildContext context) {
     final namecontroller = TextEditingController();
     final passwordcontroller = TextEditingController();
+    final confirmpasswordcontroller = TextEditingController();
+    final emailcontroller = TextEditingController();
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -96,7 +98,7 @@ class Signin extends StatelessWidget {
                       ),
 
                       Inputfield(
-                        cont: namecontroller,
+                        cont: emailcontroller,
                         type: TextInputType.emailAddress,
                         hint: 'example@gmail.com',
                         option: false,
@@ -133,7 +135,7 @@ class Signin extends StatelessWidget {
                         ),
                       ),
                       Inputfield(
-                        cont: passwordcontroller,
+                        cont: confirmpasswordcontroller,
                         type: TextInputType.visiblePassword,
                         hint: 'Enter password',
                         option: true,
