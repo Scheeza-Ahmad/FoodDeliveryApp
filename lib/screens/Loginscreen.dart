@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food/screens/Homescreen.dart';
 import 'package:food/screens/Signin.dart';
 import 'package:food/screens/forgetpassword.dart';
 import 'package:food/utils/Stringutil.dart';
@@ -122,7 +123,7 @@ class Loginscreen extends StatelessWidget {
                           ),
                           InkWell(
                             onTap: () {
-                              Get.to(Forgetpassword());
+                              Get.to(() => Forgetpassword());
                             },
                             child: Text(
                               'Forget Password',
@@ -152,7 +153,7 @@ class Loginscreen extends StatelessWidget {
                             ),
                             colorText: Colors.white,
                           );
-                          Get.to('');
+                          Get.to(() => Homescreen());
                         },
                       ),
                       SizedBox(height: 14),
@@ -169,7 +170,7 @@ class Loginscreen extends StatelessWidget {
                           ),
                           InkWell(
                             onTap: () {
-                              Get.to(Signin());
+                              Get.to(() => Signin());
                             },
                             child: Text(
                               'SIGN UP',
