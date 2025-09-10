@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food/screens/Loginscreen.dart';
+import 'package:food/screens/Secondscreen.dart';
 import 'package:food/widgets/Logo.dart';
 import 'package:get/get.dart';
 
@@ -9,7 +9,7 @@ class Firstsplashscreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 3), () {
-      Get.off(() => const Loginscreen());
+      Get.off(() => const Secondscreen());
     });
 
     return Scaffold(
