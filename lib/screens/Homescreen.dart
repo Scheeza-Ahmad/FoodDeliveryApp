@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food/models/homepage_card.dart';
 import 'package:food/models/resturant_model.dart';
+import 'package:food/screens/cartscreen.dart';
 import 'package:food/utils/Colorutil.dart';
 import 'package:food/utils/Stringutil.dart';
 import 'package:food/widgets/iconbtn.dart';
@@ -20,6 +21,7 @@ class Homescreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -58,7 +60,7 @@ class Homescreen extends StatelessWidget {
                   Iconbtn(
                     color: Color(0xff181C2E),
                     action: () {
-                      Get.to('');
+                      Get.to(() => Cartscreen());
                     },
                     icon: Icons.trolley,
                   ),

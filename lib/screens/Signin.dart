@@ -22,7 +22,7 @@ class Signin extends StatelessWidget {
           Container(color: const Color(0xFF121223)),
 
           Positioned(
-            bottom: 460,
+            bottom: 550,
             left: 0,
             right: 0,
             child: Column(
@@ -53,7 +53,7 @@ class Signin extends StatelessWidget {
             right: 0,
             child: Container(
               width: double.infinity,
-              height: 440,
+              height: 500,
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20),
