@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:food/controller/eye_controller.dart';
+import 'package:food/controller/tick_controller.dart';
 import 'package:food/screens/Homescreen.dart';
 import 'package:food/screens/Signin.dart';
 import 'package:food/screens/forgetpassword.dart';
 import 'package:food/utils/Stringutil.dart';
 import 'package:food/widgets/button.dart';
 import 'package:food/widgets/iconbutton.dart';
+import 'package:food/widgets/input_password.dart';
 import 'package:food/widgets/inputfield.dart';
 import 'package:get/get.dart';
 
@@ -15,7 +18,8 @@ class Loginscreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final namecontroller = TextEditingController();
     final passwordcontroller = TextEditingController();
-
+    final EyeController controller = EyeController();
+    final TickController control = TickController();
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
@@ -98,11 +102,11 @@ class Loginscreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Inputfield(
+                      InputPassword(
                         cont: passwordcontroller,
-                        type: TextInputType.visiblePassword,
-                        hint: 'Enter password',
-                        option: true,
+                        type: TextInputType.text,
+                        hint: 'Password',
+                        controller: controller,
                       ),
                       SizedBox(height: 12),
                       Row(
@@ -110,7 +114,18 @@ class Loginscreen extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Icon(Icons.check_box_outline_blank_rounded),
+                              Obx(
+                                () => IconButton(
+                                  onPressed: () {
+                                    control.toogle();
+                                  },
+                                  icon: Icon(
+                                    control.tick.value
+                                        ? Icons.check_box_outline_blank_outlined
+                                        : Icons.check_box,
+                                  ),
+                                ),
+                              ),
                               Text(
                                 'Remember Me',
                                 style: TextStyle(

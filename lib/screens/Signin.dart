@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:food/controller/eye_controller.dart';
 import 'package:food/screens/Homescreen.dart';
 import 'package:food/utils/Stringutil.dart';
 import 'package:food/widgets/button.dart';
+import 'package:food/widgets/input_password.dart';
 import 'package:food/widgets/inputfield.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +16,7 @@ class Signin extends StatelessWidget {
     final passwordcontroller = TextEditingController();
     final confirmpasswordcontroller = TextEditingController();
     final emailcontroller = TextEditingController();
+    final EyeController controller = EyeController();
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -117,11 +120,11 @@ class Signin extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Inputfield(
+                      InputPassword(
                         cont: passwordcontroller,
-                        type: TextInputType.visiblePassword,
-                        hint: 'Enter password',
-                        option: true,
+                        type: TextInputType.text,
+                        hint: 'Password',
+                        controller: controller,
                       ),
                       SizedBox(height: 16),
                       Align(
@@ -135,11 +138,11 @@ class Signin extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Inputfield(
+                      InputPassword(
                         cont: confirmpasswordcontroller,
-                        type: TextInputType.visiblePassword,
-                        hint: 'Enter password',
-                        option: true,
+                        type: TextInputType.text,
+                        hint: 'Confirm Password',
+                        controller: controller,
                       ),
                       SizedBox(height: 16),
 
@@ -159,7 +162,7 @@ class Signin extends StatelessWidget {
                             ),
                             colorText: Colors.white,
                           );
-                          Get.to(()=>Homescreen());
+                          Get.to(() => Homescreen());
                         },
                       ),
                     ],

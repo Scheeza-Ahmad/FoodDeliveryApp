@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:food/controller/eye_controller.dart';
 import 'package:food/screens/Homescreen.dart';
 import 'package:food/utils/Stringutil.dart';
 import 'package:food/widgets/button.dart';
+import 'package:food/widgets/input_password.dart';
 import 'package:food/widgets/inputfield.dart';
 import 'package:get/get.dart';
 
@@ -13,6 +15,7 @@ class Forgetpassword extends StatelessWidget {
     final namecontroller = TextEditingController();
     final passwordcontroller = TextEditingController();
     final confirmpasswordcontroller = TextEditingController();
+    final EyeController controler = EyeController();
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
@@ -95,11 +98,11 @@ class Forgetpassword extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Inputfield(
+                      InputPassword(
                         cont: passwordcontroller,
-                        type: TextInputType.visiblePassword,
-                        hint: 'Enter New password',
-                        option: true,
+                        type: TextInputType.text,
+                        hint: 'Password',
+                        controller: controler,
                       ),
                       SizedBox(height: 16),
                       Align(
@@ -113,11 +116,11 @@ class Forgetpassword extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Inputfield(
+                      InputPassword(
                         cont: confirmpasswordcontroller,
-                        type: TextInputType.visiblePassword,
-                        hint: 'Confirm password',
-                        option: true,
+                        type: TextInputType.text,
+                        hint: 'Confirm Password',
+                        controller: controler,
                       ),
                       SizedBox(height: 16),
 
