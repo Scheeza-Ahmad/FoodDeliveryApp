@@ -12,9 +12,11 @@ class Firstsplashscreen extends StatelessWidget {
       Get.off(() => const Secondscreen());
     });
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(child: Logo()),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Center(child: Logo()),
+      ),
     );
   }
 }

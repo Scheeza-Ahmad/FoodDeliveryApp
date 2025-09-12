@@ -9,22 +9,24 @@ class Fourthscreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(40, 50, 40, 50),
-          child: SingleChildScrollView(
-            child: Deliverypage(
-              image: 'assets/images/s4.jpg',
-              heading: 'Free delivery offers',
-              text:
-                  'Get all your loved foods in one place. You just place the order, we do the rest',
-              btntext: 'Get Started',
-              action: () {
-                Get.to(() => Loginscreen());
-              },
-              color: Colorutil.color,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(40, 50, 40, 50),
+            child: SingleChildScrollView(
+              child: Deliverypage(
+                image: 'assets/images/s4.jpg',
+                heading: 'Free delivery offers',
+                text:
+                    'Get all your loved foods in one place. You just place the order, we do the rest',
+                btntext: 'Get Started',
+                action: () {
+                  Get.to(() => Loginscreen());
+                },
+                color: Colorutil.color,
+              ),
             ),
           ),
         ),
