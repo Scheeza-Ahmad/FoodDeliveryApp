@@ -54,10 +54,10 @@ class Cartscreen extends StatelessWidget {
                         ),
                         InkWell(
                           onTap: () {
-                            Get.to(() => Payment());
+                            Get.to(() => Homescreen());
                           },
                           child: Text(
-                            'DONE',
+                            'Continue Shopping',
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.green,
@@ -67,29 +67,52 @@ class Cartscreen extends StatelessWidget {
                         ),
                       ],
                     ),
+                    SizedBox(height: 20),
                     Obx(
                       () => Expanded(
-                        // <-- Column hatao, direct Expanded use karo
-                        child: ListView.builder(
-                          itemCount: cartController
-                              .cartItems
-                              .length, // <-- instance use karo
-                          itemBuilder: (context, index) {
-                            var item = cartController
-                                .cartItems[index]; // <-- instance use karo
-                            return ListTile(
-                              title: Text(item.name),
-                              subtitle: Text("PKR ${item.price}"),
-                              trailing: IconButton(
-                                icon: const Icon(Icons.remove_circle),
-                                onPressed: () {
-                                  cartController.removeFromCart(
-                                    item,
-                                  ); // <-- instance use karo
-                                },
-                              ),
-                            );
-                          },
+                        child: Container(
+                          color: Colors.white,
+                          child: ListView.separated(
+                            itemCount: cartController.cartItems.length,
+                            separatorBuilder: (context, index) => Divider(
+                              color: Colors.grey.shade300,
+                              thickness: 1,
+                            ), // <-- har item ke beech separator line
+                            itemBuilder: (context, index) {
+                              var item = cartController.cartItems[index];
+                              return ListTile(
+                                leading: Image.asset(
+                                  item.image,
+                                  width: 50,
+                                  height: 50,
+                                  fit: BoxFit.cover,
+                                ),
+                                title: Text(
+                                  item.name,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                subtitle: Text(
+                                  "PKR ${item.price}",
+                                  style: TextStyle(
+                                    color: Colors.grey[700],
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                trailing: IconButton(
+                                  icon: const Icon(
+                                    Icons.remove_circle,
+                                    color: Colors.red,
+                                  ),
+                                  onPressed: () {
+                                    cartController.removeFromCart(item);
+                                  },
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ),

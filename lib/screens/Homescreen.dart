@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food/controller/cart_controller.dart';
 import 'package:food/models/homepage_card.dart';
 import 'package:food/models/resturant_model.dart';
 import 'package:food/screens/cartscreen.dart';
@@ -15,6 +16,8 @@ class Homescreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SearchController = TextEditingController();
+    final CartController cartController = Get.put(CartController());
+
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -125,9 +128,16 @@ class Homescreen extends StatelessWidget {
                       HomepageCard item = HomepageCard.product[index];
                       return InkWell(
                         onTap: () {
-                          // Get.to('');
-                          print('Food Card is clicked');
+                          cartController.addToCart(item);
+                          Get.snackbar(
+                            "Added to Cart",
+                            "${item.name} added successfully",
+                            snackPosition: SnackPosition.TOP,
+                            backgroundColor: Colors.green.withOpacity(0.7),
+                            colorText: Colors.white,
+                          );
                         },
+
                         child: Card(
                           elevation: 4,
                           margin: const EdgeInsets.symmetric(
@@ -153,7 +163,7 @@ class Homescreen extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 10),
-      
+
                                 Text(
                                   item.name,
                                   style: const TextStyle(
@@ -161,7 +171,7 @@ class Homescreen extends StatelessWidget {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-      
+
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -174,9 +184,9 @@ class Homescreen extends StatelessWidget {
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
-      
+
                                     Text(
-                                      item.price,
+                                      item.price.toString(),
                                       style: TextStyle(
                                         fontSize: 14,
                                         color: Colors.grey[700],
@@ -216,7 +226,7 @@ class Homescreen extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 15),
-      
+
                 ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
