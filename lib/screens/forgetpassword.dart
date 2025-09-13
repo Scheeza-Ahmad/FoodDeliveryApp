@@ -42,7 +42,7 @@ class Forgetpassword extends StatelessWidget {
             Container(color: const Color(0xFF121223)),
 
             Positioned(
-              bottom: 550,
+              bottom: 470,
               left: 0,
               right: 0,
               child: Column(
@@ -73,7 +73,7 @@ class Forgetpassword extends StatelessWidget {
               right: 0,
               child: Container(
                 width: double.infinity,
-                height: 500,
+                height: 450,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20),

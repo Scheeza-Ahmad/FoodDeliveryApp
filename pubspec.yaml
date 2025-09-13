@@ -50,7 +50,9 @@ dev_dependencies:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/images/food.png"  
+  image_path: "assets/images/logo.jpg"  
+  adaptive_icon_background: "#ffffff"   # background color (ya phir ek image de sakti ho)
+  adaptive_icon_foreground: "assets/images/logo.jpg"
 
 
 # For information on the generic Dart part of this file, see the
