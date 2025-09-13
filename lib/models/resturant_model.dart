@@ -17,7 +17,7 @@ class ResturantModel {
 
   static List<ResturantModel> resturant = [
     ResturantModel(
-      image: 'assets/images/pizza.png',
+      image: 'assets/images/first.png',
       name: 'Rose Garden Restaurant',
       category: 'Burger • Chicken • Wings',
       rating: 4.7,
@@ -31,7 +31,7 @@ class ResturantModel {
       time: '10 mins',
     ),
     ResturantModel(
-      image: 'assets/images/desi.png',
+      image: 'assets/images/second.png',
       name: 'Desi Delight',
       category: 'Biryani • Karahi • BBQ',
       rating: 3.9,
@@ -66,7 +66,7 @@ class ResturantModel {
       time: '18 mins',
     ),
     ResturantModel(
-      image: 'assets/images/sandwichstop.png',
+      image: 'assets/images/sandwich.png',
       name: 'Sandwich Stop',
       category: 'Sandwiches • Wraps • Rolls',
       rating: 4.0,

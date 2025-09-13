@@ -20,9 +20,9 @@ class Congratulation extends StatelessWidget {
                 image: 'assets/images/congrat.jpg',
                 heading: 'Congratulations!',
                 text: 'You Successfully made a payment.Enjoy our services',
-                btntext: 'TRACE ORDER',
+                btntext: 'CONTINUE YOU FOOD HUNT',
                 action: () {
-                  Get.to(() => Homescreen());
+                  Get.offAll(() => Homescreen());
                 },
                 color: Colorutil.color,
               ),

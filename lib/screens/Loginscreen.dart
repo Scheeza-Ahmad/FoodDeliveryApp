@@ -21,16 +21,16 @@ class Loginscreen extends StatelessWidget {
     final passwordcontroller = TextEditingController();
     final EyeController controller = EyeController();
     final TickController control = TickController();
-    Future<void> loginUser(String name, String password) async {
+    Future<void> loginUser(String email, String password) async {
       final pref = await SharedPreferences.getInstance();
-      List<String> names = pref.getStringList("names") ?? [];
+      List<String> emails = pref.getStringList("emails") ?? [];
       List<String> passwords = pref.getStringList("passwords") ?? [];
 
-      if (names.contains(name)) {
-        int index = names.indexOf(name);
+      if (emails.contains(email)) {
+        int index = emails.indexOf(email);
         if (passwords[index] == password) {
           Get.snackbar("Success", "Login successful!");
-          Get.to(() => const Homescreen());
+          Get.off(() => const Homescreen());
           // yahan aap apni HomeScreen ya dashboard le ja sakte ho
         } else {
           Get.snackbar("Error", "Wrong password!");

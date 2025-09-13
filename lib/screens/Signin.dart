@@ -19,24 +19,23 @@ class Signin extends StatelessWidget {
     final confirmpasswordcontroller = TextEditingController();
     final emailcontroller = TextEditingController();
     final EyeController controller = EyeController();
-    Future<void> signupUser(String name, String password) async {
+    Future<void> signupUser(String email, String password) async {
       final pref = await SharedPreferences.getInstance();
-      List<String> names = pref.getStringList("names") ?? [];
+      List<String> emails = pref.getStringList("email") ?? [];
       List<String> passwords = pref.getStringList("passwords") ?? [];
 
-      if (names.contains(name)) {
-        // agar user already hai → Login pe bhej do
+      if (emails.contains(email)) {
         Get.snackbar('Error', 'You are already a user. Please Login');
         Get.to(() => const Loginscreen());
       } else {
         // new user save karna
-        names.add(name);
+        emails.add(email);
         passwords.add(password);
-        await pref.setStringList("names", names);
+        await pref.setStringList("emails", emails);
         await pref.setStringList("passwords", passwords);
 
         Get.snackbar('Success', 'Signup successful. Welcome!');
-        Get.to(() => const Homescreen());
+        Get.off(() => const Homescreen());
       }
     }
 
@@ -173,10 +172,10 @@ class Signin extends StatelessWidget {
                           color: Color(0xFFFF7622),
                           text: 'Sign Up',
                           action: () {
-                            var name = namecontroller.text.trim();
+                            var email = emailcontroller.text.trim();
                             var password = passwordcontroller.text.trim();
-                            if (name.isNotEmpty && password.isNotEmpty) {
-                              signupUser(name, password);
+                            if (email.isNotEmpty && password.isNotEmpty) {
+                              signupUser(email, password);
                             } else {
                               Get.snackbar("Error", "Please enter all fields");
                             }

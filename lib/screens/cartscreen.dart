@@ -77,7 +77,7 @@ class Cartscreen extends StatelessWidget {
                             separatorBuilder: (context, index) => Divider(
                               color: Colors.grey.shade300,
                               thickness: 1,
-                            ), // <-- har item ke beech separator line
+                            ), 
                             itemBuilder: (context, index) {
                               var item = cartController.cartItems[index];
                               return ListTile(
@@ -184,7 +184,7 @@ class Cartscreen extends StatelessWidget {
                           color: Colorutil.color,
                           text: 'PLACE ORDER',
                           action: () {
-                            Get.to(() => Payment());
+                            Get.off(() => Payment());
                           },
                           height: 50,
                         ),

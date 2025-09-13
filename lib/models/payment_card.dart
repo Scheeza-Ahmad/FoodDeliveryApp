@@ -1,4 +1,3 @@
-
 class PaymentCard {
   final String image;
   final String item;
@@ -7,7 +6,7 @@ class PaymentCard {
     PaymentCard(image: 'assets/images/cash.png', item: 'Cash'),
     PaymentCard(image: 'assets/images/visa.png', item: 'VISA Card'),
     PaymentCard(image: 'assets/images/mastercard.png', item: 'MasterCard'),
-    PaymentCard(image: 'assets/images/nayapay.png', item: 'nayaPay'),
+    PaymentCard(image: 'assets/images/nayapay.png', item: 'NayaPay'),
     PaymentCard(image: 'assets/images/jazzcash.png', item: 'JazzCash'),
   ];
 }

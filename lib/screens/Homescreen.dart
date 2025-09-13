@@ -108,14 +108,6 @@ class Homescreen extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    Text(
-                      'See All >',
-                      style: TextStyle(
-                        fontSize: Stringutil.content,
-                        color: Colors.grey[700],
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
                   ],
                 ),
                 SizedBox(height: 15),
@@ -213,14 +205,6 @@ class Homescreen extends StatelessWidget {
                         fontSize: Stringutil.mainsize,
                         color: Colors.grey[700],
                         fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Text(
-                      'See All >',
-                      style: TextStyle(
-                        fontSize: Stringutil.content,
-                        color: Colors.grey[700],
-                        fontWeight: FontWeight.w400,
                       ),
                     ),
                   ],

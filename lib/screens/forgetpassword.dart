@@ -17,18 +17,18 @@ class Forgetpassword extends StatelessWidget {
     final passwordcontroller = TextEditingController();
     final confirmpasswordcontroller = TextEditingController();
     final EyeController controler = EyeController();
-    Future<void> resetPassword(String name, String newPassword) async {
+    Future<void> resetPassword(String email, String newPassword) async {
       final pref = await SharedPreferences.getInstance();
-      List<String> names = pref.getStringList("names") ?? [];
+      List<String> emails = pref.getStringList("emails") ?? [];
       List<String> passwords = pref.getStringList("passwords") ?? [];
 
-      if (names.contains(name)) {
-        int index = names.indexOf(name);
-        passwords[index] = newPassword; // update old password
+      if (emails.contains(email)) {
+        int index = emails.indexOf(email);
+        passwords[index] = newPassword;
         await pref.setStringList("passwords", passwords);
 
         Get.snackbar("Success", "Password updated successfully!");
-        Get.off(() => const Loginscreen()); // wapas login pe bhej do
+        Get.off(() => const Loginscreen()); 
       } else {
         Get.snackbar("Error", "No account found with this name.");
       }

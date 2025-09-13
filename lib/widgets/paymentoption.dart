@@ -3,15 +3,18 @@ import 'package:food/models/payment_card.dart';
 
 class Paymentoption extends StatelessWidget {
   final PaymentCard pay;
-  const Paymentoption({super.key, required this.pay});
+  final VoidCallback onSelect;   
+
+  const Paymentoption({
+    super.key,
+    required this.pay,
+    required this.onSelect,
+  });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        // Get.to('');
-        print('Food Card is clicked');
-      },
+      onTap: onSelect, 
       child: Card(
         elevation: 4,
         margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
@@ -32,7 +35,6 @@ class Paymentoption extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 15),
-
               Text(
                 pay.item,
                 style: const TextStyle(

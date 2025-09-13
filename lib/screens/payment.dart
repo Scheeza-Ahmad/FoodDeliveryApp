@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:food/controller/cart_controller.dart';
 import 'package:food/models/payment_card.dart';
 import 'package:food/screens/Homescreen.dart';
 import 'package:food/screens/congratulation.dart';
 import 'package:food/utils/Colorutil.dart';
 import 'package:food/widgets/button.dart';
 import 'package:food/widgets/iconbtn.dart';
-import 'package:food/widgets/mastercard.dart';
 import 'package:food/widgets/paymentoption.dart';
 import 'package:get/get.dart';
 
-class Payment extends StatelessWidget {
+class Payment extends StatefulWidget {
   const Payment({super.key});
 
   @override
+  State<Payment> createState() => _PaymentState();
+}
+
+class _PaymentState extends State<Payment> {
+  String? selectedOption;
+
+  @override
   Widget build(BuildContext context) {
+    final CartController cartController = Get.find();
+
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -22,73 +31,87 @@ class Payment extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        Iconbtn(
-                          color: Colors.grey.shade600,
-                          action: () {
-                            Get.to(() => Homescreen());
-                          },
-                          icon: Icons.arrow_back,
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          'Payment',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
+                    Iconbtn(
+                      color: Colors.grey.shade600,
+                      action: () {
+                        Get.to(() => const Homescreen());
+                      },
+                      icon: Icons.arrow_back,
+                    ),
+                    const SizedBox(width: 10),
+                    const Text(
+                      'Payment',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ],
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
+
                 SizedBox(
                   height: 200,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: PaymentCard.option.length,
                     itemBuilder: (context, index) {
-                      return Paymentoption(pay: PaymentCard.option[index]);
+                      return Paymentoption(
+                        pay: PaymentCard.option[index],
+                        onSelect: () {
+                          setState(() {
+                            selectedOption = PaymentCard.option[index].item;
+                          });
+                        },
+                      );
                     },
                   ),
                 ),
-                SizedBox(height: 20),
-                Mastercard(),
-                SizedBox(height: 20),
-                Button(
-                  color: Colors.grey.shade300,
-                  text: '+ ADD NEW',
-                  action: () {
-                    Get.to('');
-                    print('New Card added');
-                  },
-                ),
-                SizedBox(height: 40),
+
+                const SizedBox(height: 40),
+
+                if (selectedOption != null) ...[
+                  Text(
+                    "Selected: $selectedOption",
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                ],
+
                 Text(
-                  'Total  ',
-                  style: TextStyle(
+                  'Total : ${cartController.totalPrice.toString()}',
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 20),
+
+                const SizedBox(height: 20),
+
                 Button(
                   color: Colorutil.color,
-                  text: 'PAY AND CONFIRM',
+                  text: 'CONFIRM AND CONTINUE',
                   action: () {
-                    Get.to(() => Congratulation());
+                    if (selectedOption == null) {
+                      Get.snackbar(
+                        "Error",
+                        "Please select a payment option first",
+                      );
+                    } else {
+                      Get.to(() => const Congratulation());
+                    }
                   },
                   height: 50,
                 ),
-                SizedBox(height: 15,),
               ],
             ),
           ),
