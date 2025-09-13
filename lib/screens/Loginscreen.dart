@@ -10,6 +10,7 @@ import 'package:food/widgets/iconbutton.dart';
 import 'package:food/widgets/input_password.dart';
 import 'package:food/widgets/inputfield.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Loginscreen extends StatelessWidget {
   const Loginscreen({super.key});
@@ -20,13 +21,33 @@ class Loginscreen extends StatelessWidget {
     final passwordcontroller = TextEditingController();
     final EyeController controller = EyeController();
     final TickController control = TickController();
+    Future<void> loginUser(String name, String password) async {
+      final pref = await SharedPreferences.getInstance();
+      List<String> names = pref.getStringList("names") ?? [];
+      List<String> passwords = pref.getStringList("passwords") ?? [];
+
+      if (names.contains(name)) {
+        int index = names.indexOf(name);
+        if (passwords[index] == password) {
+          Get.snackbar("Success", "Login successful!");
+          Get.to(() => const Homescreen());
+          // yahan aap apni HomeScreen ya dashboard le ja sakte ho
+        } else {
+          Get.snackbar("Error", "Wrong password!");
+        }
+      } else {
+        Get.snackbar("Error", "No account found. Please signup first.");
+        Get.to(() => const Signin());
+      }
+    }
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,
         body: Stack(
           children: [
             Container(color: const Color(0xFF121223)),
-      
+
             Positioned(
               bottom: 550,
               left: 0,
@@ -52,7 +73,7 @@ class Loginscreen extends StatelessWidget {
                 ],
               ),
             ),
-      
+
             Positioned(
               bottom: 0,
               left: 0,
@@ -83,14 +104,14 @@ class Loginscreen extends StatelessWidget {
                             ),
                           ),
                         ),
-      
+
                         Inputfield(
                           cont: namecontroller,
                           type: TextInputType.emailAddress,
                           hint: 'example@gmail.com',
                           option: false,
                         ),
-      
+
                         const SizedBox(height: 27),
                         Align(
                           alignment: Alignment.centerLeft,
@@ -122,7 +143,8 @@ class Loginscreen extends StatelessWidget {
                                     },
                                     icon: Icon(
                                       control.tick.value
-                                          ? Icons.check_box_outline_blank_outlined
+                                          ? Icons
+                                                .check_box_outline_blank_outlined
                                           : Icons.check_box,
                                     ),
                                   ),
@@ -157,19 +179,13 @@ class Loginscreen extends StatelessWidget {
                           color: Color(0xFFFF7622),
                           text: 'LOGIN',
                           action: () {
-                            Get.snackbar(
-                              "Successful Login",
-                              "Welcome Back!Glad to see you Again",
-                              snackPosition: SnackPosition.TOP,
-                              backgroundColor: const Color.fromARGB(
-                                255,
-                                139,
-                                139,
-                                139,
-                              ),
-                              colorText: Colors.white,
-                            );
-                            Get.to(() => Homescreen());
+                            var name = namecontroller.text.trim();
+                            var password = passwordcontroller.text.trim();
+                            if (name.isNotEmpty && password.isNotEmpty) {
+                              loginUser(name, password);
+                            } else {
+                              Get.snackbar("Error", "Please enter all fields");
+                            }
                           },
                         ),
                         SizedBox(height: 14),
@@ -199,15 +215,18 @@ class Loginscreen extends StatelessWidget {
                             ),
                           ],
                         ),
-      
+
                         SizedBox(height: 16),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
                               width: 60,
-      
-                              child: Divider(color: Colors.grey, thickness: 1.2),
+
+                              child: Divider(
+                                color: Colors.grey,
+                                thickness: 1.2,
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(
@@ -223,11 +242,14 @@ class Loginscreen extends StatelessWidget {
                             ),
                             Container(
                               width: 60,
-                              child: Divider(color: Colors.grey, thickness: 1.2),
+                              child: Divider(
+                                color: Colors.grey,
+                                thickness: 1.2,
+                              ),
                             ),
                           ],
                         ),
-      
+
                         SizedBox(height: 16),
                         Center(
                           child: Row(
@@ -243,7 +265,7 @@ class Loginscreen extends StatelessWidget {
                               Iconbutton(
                                 color: Color(0xff1CB7EB),
                                 image: 'assets/images/twitter.png',
-      
+
                                 action: () {
                                   Get.to('');
                                 },
@@ -251,7 +273,7 @@ class Loginscreen extends StatelessWidget {
                               Iconbutton(
                                 color: Colors.black,
                                 image: 'assets/images/apple.png',
-      
+
                                 action: () {
                                   Get.to('');
                                 },

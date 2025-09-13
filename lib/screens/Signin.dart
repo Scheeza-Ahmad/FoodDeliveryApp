@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:food/controller/eye_controller.dart';
 import 'package:food/screens/Homescreen.dart';
+import 'package:food/screens/Loginscreen.dart';
 import 'package:food/utils/Stringutil.dart';
 import 'package:food/widgets/button.dart';
 import 'package:food/widgets/input_password.dart';
 import 'package:food/widgets/inputfield.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Signin extends StatelessWidget {
   const Signin({super.key});
@@ -17,6 +19,26 @@ class Signin extends StatelessWidget {
     final confirmpasswordcontroller = TextEditingController();
     final emailcontroller = TextEditingController();
     final EyeController controller = EyeController();
+    Future<void> signupUser(String name, String password) async {
+      final pref = await SharedPreferences.getInstance();
+      List<String> names = pref.getStringList("names") ?? [];
+      List<String> passwords = pref.getStringList("passwords") ?? [];
+
+      if (names.contains(name)) {
+        // agar user already hai → Login pe bhej do
+        Get.snackbar('Error', 'You are already a user. Please Login');
+        Get.to(() => const Loginscreen());
+      } else {
+        // new user save karna
+        names.add(name);
+        passwords.add(password);
+        await pref.setStringList("names", names);
+        await pref.setStringList("passwords", passwords);
+
+        Get.snackbar('Success', 'Signup successful. Welcome!');
+        Get.to(() => const Homescreen());
+      }
+    }
 
     return SafeArea(
       child: Scaffold(
@@ -24,7 +46,7 @@ class Signin extends StatelessWidget {
         body: Stack(
           children: [
             Container(color: const Color(0xFF121223)),
-      
+
             Positioned(
               bottom: 550,
               left: 0,
@@ -50,7 +72,7 @@ class Signin extends StatelessWidget {
                 ],
               ),
             ),
-      
+
             Positioned(
               bottom: 0,
               left: 0,
@@ -81,7 +103,7 @@ class Signin extends StatelessWidget {
                             ),
                           ),
                         ),
-      
+
                         Inputfield(
                           cont: namecontroller,
                           type: TextInputType.text,
@@ -89,7 +111,7 @@ class Signin extends StatelessWidget {
                           option: false,
                         ),
                         SizedBox(height: 16),
-      
+
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
@@ -101,14 +123,14 @@ class Signin extends StatelessWidget {
                             ),
                           ),
                         ),
-      
+
                         Inputfield(
                           cont: emailcontroller,
                           type: TextInputType.emailAddress,
                           hint: 'example@gmail.com',
                           option: false,
                         ),
-      
+
                         const SizedBox(height: 16),
                         Align(
                           alignment: Alignment.centerLeft,
@@ -146,24 +168,18 @@ class Signin extends StatelessWidget {
                           controller: controller,
                         ),
                         SizedBox(height: 16),
-      
+
                         Button(
                           color: Color(0xFFFF7622),
                           text: 'Sign Up',
                           action: () {
-                            Get.snackbar(
-                              "Successful Sign Up",
-                              "Welcome to our Team",
-                              snackPosition: SnackPosition.TOP,
-                              backgroundColor: const Color.fromARGB(
-                                255,
-                                139,
-                                139,
-                                139,
-                              ),
-                              colorText: Colors.white,
-                            );
-                            Get.to(() => Homescreen());
+                            var name = namecontroller.text.trim();
+                            var password = passwordcontroller.text.trim();
+                            if (name.isNotEmpty && password.isNotEmpty) {
+                              signupUser(name, password);
+                            } else {
+                              Get.snackbar("Error", "Please enter all fields");
+                            }
                           },
                         ),
                       ],

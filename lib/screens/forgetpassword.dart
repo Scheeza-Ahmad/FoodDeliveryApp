@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:food/controller/eye_controller.dart';
-import 'package:food/screens/Homescreen.dart';
+import 'package:food/screens/Loginscreen.dart';
 import 'package:food/utils/Stringutil.dart';
 import 'package:food/widgets/button.dart';
 import 'package:food/widgets/input_password.dart';
 import 'package:food/widgets/inputfield.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Forgetpassword extends StatelessWidget {
   const Forgetpassword({super.key});
@@ -16,13 +17,30 @@ class Forgetpassword extends StatelessWidget {
     final passwordcontroller = TextEditingController();
     final confirmpasswordcontroller = TextEditingController();
     final EyeController controler = EyeController();
+    Future<void> resetPassword(String name, String newPassword) async {
+      final pref = await SharedPreferences.getInstance();
+      List<String> names = pref.getStringList("names") ?? [];
+      List<String> passwords = pref.getStringList("passwords") ?? [];
+
+      if (names.contains(name)) {
+        int index = names.indexOf(name);
+        passwords[index] = newPassword; // update old password
+        await pref.setStringList("passwords", passwords);
+
+        Get.snackbar("Success", "Password updated successfully!");
+        Get.off(() => const Loginscreen()); // wapas login pe bhej do
+      } else {
+        Get.snackbar("Error", "No account found with this name.");
+      }
+    }
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,
         body: Stack(
           children: [
             Container(color: const Color(0xFF121223)),
-      
+
             Positioned(
               bottom: 550,
               left: 0,
@@ -48,7 +66,7 @@ class Forgetpassword extends StatelessWidget {
                 ],
               ),
             ),
-      
+
             Positioned(
               bottom: 0,
               left: 0,
@@ -79,14 +97,14 @@ class Forgetpassword extends StatelessWidget {
                             ),
                           ),
                         ),
-      
+
                         Inputfield(
                           cont: namecontroller,
                           type: TextInputType.emailAddress,
                           hint: 'example@gmail.com',
                           option: false,
                         ),
-      
+
                         const SizedBox(height: 16),
                         Align(
                           alignment: Alignment.centerLeft,
@@ -124,24 +142,22 @@ class Forgetpassword extends StatelessWidget {
                           controller: controler,
                         ),
                         SizedBox(height: 16),
-      
+
                         Button(
                           color: Color(0xFFFF7622),
                           text: 'REGISTER AGAIN',
                           action: () {
-                            Get.snackbar(
-                              "Successful Login",
-                              "Welcome Again!!",
-                              snackPosition: SnackPosition.TOP,
-                              backgroundColor: const Color.fromARGB(
-                                255,
-                                139,
-                                139,
-                                139,
-                              ),
-                              colorText: Colors.white,
-                            );
-                            Get.to(() => Homescreen());
+                            String name = namecontroller.text.trim();
+                            String newPass = passwordcontroller.text.trim();
+                            String confirmPass = confirmpasswordcontroller.text
+                                .trim();
+                            if (name.isNotEmpty &&
+                                newPass.isNotEmpty &&
+                                confirmPass.isNotEmpty) {
+                              resetPassword(name, newPass);
+                            } else {
+                              Get.snackbar("Error", "Please fill all fields");
+                            }
                           },
                         ),
                       ],
