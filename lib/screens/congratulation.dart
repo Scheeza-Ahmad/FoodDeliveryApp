@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:food/screens/Homescreen.dart';
 import 'package:food/utils/Colorutil.dart';
-import 'package:food/widgets/deliverypage.dart';
+import 'package:food/widgets/last_screen.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class Congratulation extends StatelessWidget {
   const Congratulation({super.key});
@@ -16,15 +17,16 @@ class Congratulation extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(40, 50, 40, 50),
             child: SingleChildScrollView(
-              child: Deliverypage(
+              child: LastScreen(
                 image: 'assets/images/congrat.jpg',
-                heading: 'Congratulations!',
-                text: 'You Successfully made a payment.Enjoy our services',
-                btntext: 'CONTINUE YOU FOOD HUNT',
+                heading: 'Congratulations!!',
+                text: 'Your Order Is Placed Successfully!!!',
+                btntext: 'CONTINUE YOUR FOOD HUNT',
                 action: () {
-                  Get.offAll(() => Homescreen());
+                  Get.to(() => Homescreen());
                 },
                 color: Colorutil.color,
+                lasttext: 'You will recieve your order soon',
               ),
             ),
           ),
