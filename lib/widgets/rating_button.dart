@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food/utils/Colorutil.dart';
+import 'package:food/utils/color_util.dart';
 import 'package:food/widgets/button.dart';
 import 'package:rating_dialog/rating_dialog.dart' as rating_dialog;
 

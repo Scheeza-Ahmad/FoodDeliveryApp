@@ -1,32 +1,35 @@
-class HomepageCard {
+import 'package:food/models/base_product.dart';
+import 'package:food/utils/asset_util.dart';
+
+class HomepageCard extends BaseProduct{
   final String image;
   final String name;
   final double price;
   HomepageCard({required this.image, required this.name, required this.price});
   static final List<HomepageCard> product = [
-    HomepageCard(image: 'assets/images/pizza.png', name: 'Pizza', price: 2000),
-    HomepageCard(image: 'assets/images/burger.png', name: 'Burger', price: 780),
+    HomepageCard(image: AssetUtil.pizza, name: 'Pizza', price: 2000),
+    HomepageCard(image: AssetUtil.burger, name: 'Burger', price: 780),
     HomepageCard(
-      image: 'assets/images/hotdog.png',
+      image: AssetUtil.hotdog,
       name: 'Hot Dog',
       price: 480,
     ),
     HomepageCard(
-      image: 'assets/images/alferado.png',
+      image: AssetUtil.pasta,
       name: 'Pasta',
       price: 1200,
     ),
     HomepageCard(
-      image: 'assets/images/sandwich.png',
+      image: AssetUtil.sandwich,
       name: 'Sandwich',
       price: 400,
     ),
-    HomepageCard(image: 'assets/images/suchi.png', name: 'Suchi', price: 22),
+    HomepageCard(image: AssetUtil.suchi, name: 'Suchi', price: 22),
     HomepageCard(
-      image: 'assets/images/pancake.png',
+      image: AssetUtil.pancake,
       name: 'PanCake',
       price: 1000,
     ),
-    HomepageCard(image: 'assets/images/layers.png', name: 'Cake', price: 2200),
+    HomepageCard(image: AssetUtil.cake, name: 'Cake', price: 2200),
   ];
 }

@@ -1,36 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:food/controller/eye_controller.dart';
-import 'package:food/screens/Loginscreen.dart';
-import 'package:food/utils/Stringutil.dart';
+import 'package:food/screens/home_screen.dart';
+import 'package:food/screens/login_screen.dart';
+import 'package:food/utils/string_util.dart';
 import 'package:food/widgets/button.dart';
 import 'package:food/widgets/input_password.dart';
-import 'package:food/widgets/inputfield.dart';
+import 'package:food/widgets/input_field.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Forgetpassword extends StatelessWidget {
-  const Forgetpassword({super.key});
+class Signin extends StatelessWidget {
+  const Signin({super.key});
 
   @override
   Widget build(BuildContext context) {
     final namecontroller = TextEditingController();
     final passwordcontroller = TextEditingController();
     final confirmpasswordcontroller = TextEditingController();
-    final EyeController controler = EyeController();
-    Future<void> resetPassword(String email, String newPassword) async {
+    final emailcontroller = TextEditingController();
+    final EyeController controller = EyeController();
+    Future<void> signupUser(String email, String password) async {
       final pref = await SharedPreferences.getInstance();
-      List<String> emails = pref.getStringList("emails") ?? [];
+      List<String> emails = pref.getStringList("email") ?? [];
       List<String> passwords = pref.getStringList("passwords") ?? [];
 
       if (emails.contains(email)) {
-        int index = emails.indexOf(email);
-        passwords[index] = newPassword;
+        Get.snackbar('Error', 'You are already a user. Please Login');
+        Get.to(() => const Loginscreen());
+      } else {
+        // new user save karna
+        emails.add(email);
+        passwords.add(password);
+        await pref.setStringList("emails", emails);
         await pref.setStringList("passwords", passwords);
 
-        Get.snackbar("Success", "Password updated successfully!");
-        Get.off(() => const Loginscreen()); 
-      } else {
-        Get.snackbar("Error", "No account found with this name.");
+        Get.snackbar('Success', 'Signup successful. Welcome!');
+        Get.off(() => const Homescreen());
       }
     }
 
@@ -48,7 +53,7 @@ class Forgetpassword extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    'FORGET PASSWORD',
+                    'SIGN UP',
                     style: TextStyle(
                       fontSize: Stringutil.headingsize,
                       color: Colors.white,
@@ -56,7 +61,7 @@ class Forgetpassword extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Please Sign In to Your Existing Account',
+                    'Please Sign Up to get Started',
                     style: TextStyle(
                       fontSize: Stringutil.mainsize,
                       color: const Color(0xFFC2C2C7),
@@ -89,7 +94,7 @@ class Forgetpassword extends StatelessWidget {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            'Email',
+                            'Name',
                             style: TextStyle(
                               fontSize: Stringutil.mainsize,
                               color: Colors.black,
@@ -100,6 +105,26 @@ class Forgetpassword extends StatelessWidget {
 
                         Inputfield(
                           cont: namecontroller,
+                          type: TextInputType.text,
+                          hint: 'John Doe',
+                          option: false,
+                        ),
+                        SizedBox(height: 16),
+
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Email',
+                            style: TextStyle(
+                              fontSize: Stringutil.mainsize,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+
+                        Inputfield(
+                          cont: emailcontroller,
                           type: TextInputType.emailAddress,
                           hint: 'example@gmail.com',
                           option: false,
@@ -109,7 +134,7 @@ class Forgetpassword extends StatelessWidget {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            'New Password',
+                            'Password',
                             style: TextStyle(
                               fontSize: Stringutil.mainsize,
                               color: Colors.black,
@@ -121,13 +146,13 @@ class Forgetpassword extends StatelessWidget {
                           cont: passwordcontroller,
                           type: TextInputType.text,
                           hint: 'Password',
-                          controller: controler,
+                          controller: controller,
                         ),
                         SizedBox(height: 16),
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            'Confirm Password',
+                            'Re-type Password',
                             style: TextStyle(
                               fontSize: Stringutil.mainsize,
                               color: Colors.black,
@@ -139,24 +164,20 @@ class Forgetpassword extends StatelessWidget {
                           cont: confirmpasswordcontroller,
                           type: TextInputType.text,
                           hint: 'Confirm Password',
-                          controller: controler,
+                          controller: controller,
                         ),
                         SizedBox(height: 16),
 
                         Button(
                           color: Color(0xFFFF7622),
-                          text: 'REGISTER AGAIN',
+                          text: 'Sign Up',
                           action: () {
-                            String name = namecontroller.text.trim();
-                            String newPass = passwordcontroller.text.trim();
-                            String confirmPass = confirmpasswordcontroller.text
-                                .trim();
-                            if (name.isNotEmpty &&
-                                newPass.isNotEmpty &&
-                                confirmPass.isNotEmpty) {
-                              resetPassword(name, newPass);
+                            var email = emailcontroller.text.trim();
+                            var password = passwordcontroller.text.trim();
+                            if (email.isNotEmpty && password.isNotEmpty) {
+                              signupUser(email, password);
                             } else {
-                              Get.snackbar("Error", "Please fill all fields");
+                              Get.snackbar("Error", "Please enter all fields");
                             }
                           },
                         ),

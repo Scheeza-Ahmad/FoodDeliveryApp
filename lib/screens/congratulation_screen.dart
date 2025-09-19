@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:food/screens/Homescreen.dart';
-import 'package:food/utils/Colorutil.dart';
+import 'package:food/screens/home_screen.dart';
+import 'package:food/utils/color_util.dart';
 import 'package:food/widgets/last_screen.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class Congratulation extends StatelessWidget {
   const Congratulation({super.key});

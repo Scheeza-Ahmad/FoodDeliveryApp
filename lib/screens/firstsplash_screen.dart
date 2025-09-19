@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:food/screens/Secondscreen.dart';
-import 'package:food/widgets/Logo.dart';
+import 'package:food/screens/second_screen.dart';
+import 'package:food/utils/asset_util.dart';
 import 'package:get/get.dart';
 
 class Firstsplashscreen extends StatelessWidget {
@@ -15,7 +15,7 @@ class Firstsplashscreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: Center(child: Logo()),
+        body: Center(child: Image.asset(AssetUtil.logo)),
       ),
     );
   }

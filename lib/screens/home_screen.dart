@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:food/controller/cart_controller.dart';
 import 'package:food/models/homepage_card.dart';
 import 'package:food/models/resturant_model.dart';
-import 'package:food/screens/cartscreen.dart';
-import 'package:food/utils/Colorutil.dart';
-import 'package:food/utils/Stringutil.dart';
-import 'package:food/widgets/iconbtn.dart';
+import 'package:food/screens/cart_screen.dart';
+import 'package:food/utils/color_util.dart';
+import 'package:food/utils/string_util.dart';
+import 'package:food/widgets/icon_btn.dart';
 import 'package:food/widgets/resturant.dart';
-import 'package:food/widgets/searchbar.dart';
+import 'package:food/widgets/search_bar.dart';
 import 'package:get/get.dart';
 
 class Homescreen extends StatelessWidget {
@@ -16,7 +16,7 @@ class Homescreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SearchController = TextEditingController();
-    final CartController cartController = Get.put(CartController());
+    final CartController cartController = Get.find();
 
     return SafeArea(
       child: Scaffold(

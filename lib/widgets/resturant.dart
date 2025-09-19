@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food/models/resturant_model.dart';
-import 'package:food/utils/Colorutil.dart';
+import 'package:food/utils/color_util.dart';
 // import 'package:get/get.dart';
 
 class Resturant extends StatelessWidget {

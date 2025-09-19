@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:food/controller/eye_controller.dart';
 import 'package:food/controller/tick_controller.dart';
-import 'package:food/screens/Homescreen.dart';
-import 'package:food/screens/Signin.dart';
-import 'package:food/screens/forgetpassword.dart';
-import 'package:food/utils/Stringutil.dart';
+import 'package:food/screens/forgetpassword_screen.dart';
+import 'package:food/screens/home_screen.dart';
+import 'package:food/screens/signin_screen.dart';
+import 'package:food/utils/asset_util.dart';
+import 'package:food/utils/string_util.dart';
 import 'package:food/widgets/button.dart';
-import 'package:food/widgets/iconbutton.dart';
+import 'package:food/widgets/icon_button.dart';
 import 'package:food/widgets/input_password.dart';
-import 'package:food/widgets/inputfield.dart';
+import 'package:food/widgets/input_field.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -257,14 +258,14 @@ class Loginscreen extends StatelessWidget {
                             children: [
                               Iconbutton(
                                 color: Color(0xff395998),
-                                image: 'assets/images/facebook.png',
+                                image: AssetUtil.facebook,
                                 action: () {
                                   Get.to('');
                                 },
                               ),
                               Iconbutton(
                                 color: Color(0xff1CB7EB),
-                                image: 'assets/images/twitter.png',
+                                image: AssetUtil.twitter,
 
                                 action: () {
                                   Get.to('');
@@ -272,7 +273,7 @@ class Loginscreen extends StatelessWidget {
                               ),
                               Iconbutton(
                                 color: Colors.black,
-                                image: 'assets/images/apple.png',
+                                image: AssetUtil.apple,
 
                                 action: () {
                                   Get.to('');

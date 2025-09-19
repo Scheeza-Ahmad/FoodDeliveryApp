@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:food/screens/Firstsplashscreen.dart';
-import 'package:get/get_navigation/get_navigation.dart';
+import 'package:food/controller/cart_controller.dart';
+import 'package:food/screens/rose_garden_resturant_screen.dart';
+import 'package:get/get.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Get.put(CartController());
   runApp(const MyApp());
 }
 
@@ -13,7 +16,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(body: Firstsplashscreen()),
+
+      home: Scaffold(body: RoseGardenResturantScreen()),
     );
   }
 }

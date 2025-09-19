@@ -1,14 +1,14 @@
-import 'package:food/models/homepage_card.dart';
 import 'package:get/get.dart';
+import 'package:food/models/base_product.dart'; 
 
 class CartController extends GetxController {
-  var cartItems = <HomepageCard>[].obs;
+  var cartItems = <BaseProduct>[].obs;
 
-  void addToCart(HomepageCard product) {
+  void addToCart(BaseProduct product) {
     cartItems.add(product);
   }
 
-  void removeFromCart(HomepageCard product) {
+  void removeFromCart(BaseProduct product) {
     cartItems.remove(product);
   }
 

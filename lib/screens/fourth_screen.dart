@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:food/screens/Loginscreen.dart';
-import 'package:food/utils/Colorutil.dart';
-import 'package:food/widgets/deliverypage.dart';
+import 'package:food/screens/login_screen.dart';
+import 'package:food/utils/asset_util.dart';
+import 'package:food/utils/color_util.dart';
+import 'package:food/widgets/delivery_page.dart';
 import 'package:get/get.dart';
 
 class Fourthscreen extends StatelessWidget {
@@ -17,7 +18,7 @@ class Fourthscreen extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(40, 50, 40, 50),
             child: SingleChildScrollView(
               child: Deliverypage(
-                image: 'assets/images/s4.jpg',
+                image: AssetUtil.fourthscreen,
                 heading: 'Free delivery offers',
                 text:
                     'Get all your loved foods in one place. You just place the order, we do the rest',

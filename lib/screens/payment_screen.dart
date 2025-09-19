@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:food/controller/cart_controller.dart';
 import 'package:food/models/payment_card.dart';
-import 'package:food/screens/Homescreen.dart';
-import 'package:food/screens/congratulation.dart';
-import 'package:food/utils/Colorutil.dart';
+import 'package:food/screens/home_screen.dart';
+import 'package:food/screens/congratulation_screen.dart';
+import 'package:food/utils/color_util.dart';
 import 'package:food/widgets/button.dart';
-import 'package:food/widgets/iconbtn.dart';
-import 'package:food/widgets/paymentoption.dart';
+import 'package:food/widgets/icon_btn.dart';
+import 'package:food/widgets/payment_option.dart';
 import 'package:get/get.dart';
 
 class Payment extends StatefulWidget {

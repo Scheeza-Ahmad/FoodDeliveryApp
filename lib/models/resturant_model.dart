@@ -1,3 +1,5 @@
+import 'package:food/utils/asset_util.dart';
+
 class ResturantModel {
   final String image;
   final String name;
@@ -17,63 +19,63 @@ class ResturantModel {
 
   static List<ResturantModel> resturant = [
     ResturantModel(
-      image: 'assets/images/first.png',
+      image: AssetUtil.rosegarden,
       name: 'Rose Garden Restaurant',
       category: 'Burger • Chicken • Wings',
       rating: 4.7,
       time: '20 mins',
     ),
     ResturantModel(
-      image: 'assets/images/chips.png',
+      image: AssetUtil.crispychips,
       name: 'Crispy Chips Corner',
       category: 'Fries • Snacks • Fast Food',
       rating: 3.2,
       time: '10 mins',
     ),
     ResturantModel(
-      image: 'assets/images/second.png',
+      image: AssetUtil.desidelight,
       name: 'Desi Delight',
       category: 'Biryani • Karahi • BBQ',
       rating: 3.9,
       time: '40 mins',
     ),
     ResturantModel(
-      image: 'assets/images/continental.png',
+      image: AssetUtil.continental,
       name: 'Continental Bites',
       category: 'Steaks • Pasta • Grills',
       rating: 2.8,
       time: '20 mins',
     ),
     ResturantModel(
-      image: 'assets/images/layers.png',
+      image: AssetUtil.cake,
       name: 'Layers Bakery',
       category: 'Cakes • Pastry • Donuts',
       rating: 3.9,
       time: '15 mins',
     ),
     ResturantModel(
-      image: 'assets/images/chinease.png',
+      image: AssetUtil.chinease,
       name: 'China Town',
       category: 'Chinese • Noodles • Soup',
       rating: 4.1,
       time: '25 mins',
     ),
     ResturantModel(
-      image: 'assets/images/pancake.png',
+      image: AssetUtil.pancake,
       name: 'Pancake House',
       category: 'Breakfast • Pancakes • Coffee',
       rating: 4.3,
       time: '18 mins',
     ),
     ResturantModel(
-      image: 'assets/images/sandwich.png',
+      image: AssetUtil.sandwich,
       name: 'Sandwich Stop',
       category: 'Sandwiches • Wraps • Rolls',
       rating: 4.0,
       time: '12 mins',
     ),
     ResturantModel(
-      image: 'assets/images/suchi.png',
+      image: AssetUtil.suchi,
       name: 'Sushi Express',
       category: 'Japanese • Sushi • Rolls',
       rating: 4.5,
