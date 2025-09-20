@@ -13,188 +13,158 @@ class Cartscreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final searchcontroller = TextEditingController();
-
     final CartController cartController = Get.find();
     return SafeArea(
       child: Scaffold(
-        body: Stack(
-          children: [
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              color: Color(0xff121223),
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  children: [
-                    SizedBox(height: 15),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Iconbtn(
-                              color: Colors.grey.shade600,
-                              action: () {
-                                Get.to(() => Homescreen());
-                              },
-                              icon: Icons.arrow_back,
-                            ),
-                            SizedBox(width: 10),
-                            Text(
-                              'Cart',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ],
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Get.to(() => Homescreen());
-                          },
-                          child: Text(
-                            'Continue Shopping',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.green,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 20),
-                    Obx(
-                      () => Expanded(
-                        child: Container(
+        body: Container(
+          color: Color(0xff121223),
+          child: Column(
+            children: [
+              SizedBox(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Iconbtn(
+                        color: Colors.grey.shade600,
+                        action: () {
+                          Get.to(() => Homescreen());
+                        },
+                        icon: Icons.arrow_back,
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        'Cart',
+                        style: TextStyle(
+                          fontSize: 20,
                           color: Colors.white,
-                          child: ListView.separated(
-                            itemCount: cartController.cartItems.length,
-                            separatorBuilder: (context, index) => Divider(
-                              color: Colors.grey.shade300,
-                              thickness: 1,
-                            ), 
-                            itemBuilder: (context, index) {
-                              var item = cartController.cartItems[index];
-                              return ListTile(
-                                leading: Image.asset(
-                                  item.image,
-                                  width: 50,
-                                  height: 50,
-                                  fit: BoxFit.cover,
-                                ),
-                                title: Text(
-                                  item.name,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                subtitle: Text(
-                                  "PKR ${item.price}",
-                                  style: TextStyle(
-                                    color: Colors.grey[700],
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                trailing: IconButton(
-                                  icon: const Icon(
-                                    Icons.remove_circle,
-                                    color: Colors.red,
-                                  ),
-                                  onPressed: () {
-                                    cartController.removeFromCart(item);
-                                  },
-                                ),
-                              );
-                            },
-                          ),
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: SingleChildScrollView(
-                child: Container(
-                  width: double.infinity,
-                  height: 260,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
-                    color: Colors.white,
+                    ],
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(18, 14, 18, 14),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Delivery Address',
-                          style: TextStyle(
-                            fontSize: 17,
-                            color: Colors.grey.shade500,
-                          ),
-                          textAlign: TextAlign.start,
-                        ),
-                        SizedBox(height: 15),
-                        Inputfield(
-                          cont: searchcontroller,
-                          type: TextInputType.emailAddress,
-                          hint: '2118 ThrownBridge . Cir .Cirasuse',
-                          option: false,
-                        ),
-                        SizedBox(height: 30),
-                        Row(
-                          children: [
-                            Text(
-                              'Price',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(width: 8),
-                            Text(
-                              cartController.totalPrice
-                                  .toString(), // <-- string banake show karo
-                              style: TextStyle(
-                                color: Colors.grey.shade500,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        SizedBox(height: 20),
-                        Button(
-                          color: Colorutil.color,
-                          text: 'PLACE ORDER',
-                          action: () {
-                            Get.off(() => Payment());
-                          },
+                  InkWell(
+                    onTap: () {
+                      Get.to(() => Homescreen());
+                    },
+                    child: Text(
+                      'Continue Shopping',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.green,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Expanded(
+                child: Obx(
+                  () => ListView.separated(
+                    itemCount: cartController.cartItems.length,
+                    separatorBuilder: (context, index) =>
+                        Divider(color: Colors.grey.shade300, thickness: 1),
+                    itemBuilder: (context, index) {
+                      var item = cartController.cartItems[index];
+                      return ListTile(
+                        leading: Image.asset(
+                          item.image,
+                          width: 50,
                           height: 50,
+                          fit: BoxFit.cover,
                         ),
-                      ],
-                    ),
+                        title: Text(
+                          item.name,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                        ),
+                        subtitle: Text(
+                          "PKR ${item.price}",
+                          style: TextStyle(color: Colors.white, fontSize: 14),
+                        ),
+                        trailing: IconButton(
+                          icon: const Icon(
+                            Icons.remove_circle,
+                            color: Colors.red,
+                          ),
+                          onPressed: () {
+                            cartController.removeFromCart(item);
+                          },
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),
+            ],
+          ),
+        ),
+
+        // ✅ bottomNavigationBar ka use
+        bottomNavigationBar: Container(
+          padding: const EdgeInsets.fromLTRB(18, 14, 18, 14),
+          height: 260,
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
             ),
-          ],
+            color: Colors.white,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Delivery Address',
+                style: TextStyle(fontSize: 17, color: Colors.grey.shade500),
+              ),
+              const SizedBox(height: 15),
+              Inputfield(
+                cont: TextEditingController(),
+                type: TextInputType.emailAddress,
+                hint: '2118 ThrownBridge . Cir .Cirasuse',
+                option: false,
+              ),
+              const SizedBox(height: 30),
+              Row(
+                children: [
+                  const Text(
+                    'Price',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Obx(
+                    () => Text(
+                      cartController.totalPrice.toString(),
+                      style: TextStyle(
+                        color: Colors.grey.shade500,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              Button(
+                color: Colorutil.color,
+                text: 'PLACE ORDER',
+                action: () {
+                  Get.off(() => Payment());
+                },
+                height: 50,
+              ),
+            ],
+          ),
         ),
       ),
     );

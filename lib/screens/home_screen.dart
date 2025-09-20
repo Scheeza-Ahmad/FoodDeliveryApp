@@ -31,15 +31,8 @@ class Homescreen extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Iconbtn(
-                          color: Colors.grey.shade700,
-                          action: () {
-                            Get.to('');
-                          },
-                          icon: Icons.menu,
-                        ),
-                        SizedBox(width: 18),
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'DELIVER TO',

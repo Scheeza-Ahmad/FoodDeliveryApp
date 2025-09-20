@@ -23,7 +23,7 @@ class ContinentalBitesPopularModel extends BaseProduct{
     ),
     ContinentalBitesPopularModel(
       image: AssetUtil.whitesaucepasta,
-      name: 'White Sauce Pasta',
+      name: 'Alferado Pasta',
       price: 750,
     ),
     ContinentalBitesPopularModel(

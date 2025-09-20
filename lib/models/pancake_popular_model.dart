@@ -19,7 +19,7 @@ class PancakePopularModel extends BaseProduct {
     PancakePopularModel(image: AssetUtil.latte, name: 'Latte', price: 450),
     PancakePopularModel(
       image: AssetUtil.bluepancake,
-      name: 'Blueberry Pancake',
+      name: 'Pancake',
       price: 550,
     ),
     PancakePopularModel(image: AssetUtil.waffles, name: 'Waffles', price: 380),

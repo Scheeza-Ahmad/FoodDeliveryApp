@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food/controller/cart_controller.dart';
 import 'package:food/models/rose_garden_popular_model.dart';
+import 'package:food/screens/cart_screen.dart';
 import 'package:food/utils/asset_util.dart';
 import 'package:food/utils/color_util.dart';
 import 'package:food/utils/string_util.dart';
@@ -24,6 +25,26 @@ class RoseGardenResturantScreen extends StatelessWidget {
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Iconbtn(
+                        color: Colors.grey.shade700,
+                        action: () {
+                          Get.back();
+                        },
+                        icon: Icons.arrow_back,
+                      ),
+                      Iconbtn(
+                        color: Colors.grey.shade700,
+                        action: () {
+                          Get.to(() => Cartscreen());
+                        },
+                        icon: Icons.trolley,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 14),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.asset(
@@ -293,3 +314,4 @@ class RoseGardenResturantScreen extends StatelessWidget {
     );
   }
 }
+

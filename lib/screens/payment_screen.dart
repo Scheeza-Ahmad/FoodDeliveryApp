@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food/controller/cart_controller.dart';
+import 'package:food/controller/payment_controller.dart';
 import 'package:food/models/payment_card.dart';
 import 'package:food/screens/home_screen.dart';
 import 'package:food/screens/congratulation_screen.dart';
@@ -9,19 +10,13 @@ import 'package:food/widgets/icon_btn.dart';
 import 'package:food/widgets/payment_option.dart';
 import 'package:get/get.dart';
 
-class Payment extends StatefulWidget {
+class Payment extends StatelessWidget {
   const Payment({super.key});
-
-  @override
-  State<Payment> createState() => _PaymentState();
-}
-
-class _PaymentState extends State<Payment> {
-  String? selectedOption;
 
   @override
   Widget build(BuildContext context) {
     final CartController cartController = Get.find();
+    final PaymentController paymentController = Get.put(PaymentController());
 
     return SafeArea(
       child: Scaffold(
@@ -54,6 +49,7 @@ class _PaymentState extends State<Payment> {
                 ),
                 const SizedBox(height: 30),
 
+                // Payment options
                 SizedBox(
                   height: 200,
                   child: ListView.builder(
@@ -63,9 +59,9 @@ class _PaymentState extends State<Payment> {
                       return Paymentoption(
                         pay: PaymentCard.option[index],
                         onSelect: () {
-                          setState(() {
-                            selectedOption = PaymentCard.option[index].item;
-                          });
+                          paymentController.selectOption(
+                            PaymentCard.option[index].item,
+                          );
                         },
                       );
                     },
@@ -74,43 +70,58 @@ class _PaymentState extends State<Payment> {
 
                 const SizedBox(height: 40),
 
-                if (selectedOption != null) ...[
-                  Text(
-                    "Selected: $selectedOption",
+                // Show selected option
+                Obx(() {
+                  if (paymentController.hasSelection) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Selected: ${paymentController.selectedOption.value}",
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                      ],
+                    );
+                  }
+                  return const SizedBox.shrink();
+                }),
+
+                // Total Price
+                Obx(
+                  () => Text(
+                    'Total : ${cartController.totalPrice.toString()}',
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 20,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                ],
-
-                Text(
-                  'Total : ${cartController.totalPrice.toString()}',
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
 
                 const SizedBox(height: 20),
 
-                Button(
-                  color: Colorutil.color,
-                  text: 'CONFIRM AND CONTINUE',
-                  action: () {
-                    if (selectedOption == null) {
-                      Get.snackbar(
-                        "Error",
-                        "Please select a payment option first",
-                      );
-                    } else {
-                      Get.to(() => const Congratulation());
-                    }
-                  },
-                  height: 50,
+                // Confirm Button
+                Obx(
+                  () => Button(
+                    color: Colorutil.color,
+                    text: 'CONFIRM AND CONTINUE',
+                    action: () {
+                      if (!paymentController.hasSelection) {
+                        Get.snackbar(
+                          "Error",
+                          "Please select a payment option first",
+                        );
+                      } else {
+                        Get.to(() => const Congratulation());
+                      }
+                    },
+                    height: 50,
+                  ),
                 ),
               ],
             ),

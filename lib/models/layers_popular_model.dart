@@ -18,7 +18,7 @@ class LayersPopularModel extends BaseProduct{
     ),
     LayersPopularModel(
       image: AssetUtil.cupcake,
-      name: 'Chocolate CupCake',
+      name: 'CupCake',
       price: 300,
     ),
     LayersPopularModel(
