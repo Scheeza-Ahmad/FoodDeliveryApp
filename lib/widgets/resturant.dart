@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:food/models/resturant_model.dart';
+import 'package:food/screens/china_town_resturant_screen.dart';
+import 'package:food/screens/continental_bites_resturant.dart';
+import 'package:food/screens/crispy_chips_resturant_screen.dart';
+import 'package:food/screens/desi_delight_resturant.dart';
+import 'package:food/screens/layers_resturant_screen.dart';
+import 'package:food/screens/pancake_house_screen.dart';
+import 'package:food/screens/rose_garden_resturant_screen.dart';
+import 'package:food/screens/sandwich_stop_screen.dart';
 import 'package:food/utils/color_util.dart';
-// import 'package:get/get.dart';
+import 'package:get/route_manager.dart';
 
 class Resturant extends StatelessWidget {
   final ResturantModel restu;
@@ -12,8 +20,23 @@ class Resturant extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // Get.to('');
-        print('Resturant is clicked');
+        if (restu.name == "Rose Garden Restaurant") {
+          Get.to(() => const RoseGardenResturantScreen());
+        } else if (restu.name == "Crispy Chips Corner") {
+          Get.to(() => const CrispyChipsResturantScreen());
+        } else if (restu.name == "Desi Delight") {
+          Get.to(() => const DesiDelightResturant());
+        } else if (restu.name == "Continental Bites") {
+          Get.to(() => const ContinentalBitesResturant());
+        } else if (restu.name == "Layers Bakery") {
+          Get.to(() => const LayersResturantScreen());
+        } else if (restu.name == "China Town") {
+          Get.to(() => const ChinaTownResturantScreen());
+        } else if (restu.name == "Pancake House") {
+          Get.to(() => const PancakeHouseScreen());
+        } else if (restu.name == "Sandwich Stop") {
+          Get.to(() => const SandwichStopScreen());
+        }
       },
       child: SizedBox(
         height: 420,
