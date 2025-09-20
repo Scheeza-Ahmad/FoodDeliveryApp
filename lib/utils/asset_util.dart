@@ -36,7 +36,45 @@ class AssetUtil {
   static final String doublepatty = 'assets/images/saucy.png';
   static final String white = 'assets/images/white.png';
 
+  static final String simple = 'assets/images/simple.png';
+  static final String special = 'assets/images/topping.png';
+  static final String masala = 'assets/images/masala.png';
+  static final String loaded = 'assets/images/loaded.png';
+  static final String chicken = 'assets/images/chicken.png';
 
+  static final String seekhkabab = 'assets/images/seekhkabab.png';
+  static final String roast = 'assets/images/roast.png';
+  static final String heleem = 'assets/images/haleem.png';
+  static final String afghani = 'assets/images/afghani.png';
+  static final String butterchicken = 'assets/images/butterchicken.png';
 
-  
+  static final String spaghettis = 'assets/images/spaghettis.png';
+  static final String redsaucepasta = 'assets/images/redsaucepasta.png';
+  static final String whitesaucepasta = 'assets/images/whitesaucepasta.png';
+  static final String steak = 'assets/images/steak.png';
+  static final String cheesepasta = 'assets/images/cheesepasta.png';
+
+  static final String rasberry = 'assets/images/rasberry.png';
+  static final String cupcake = 'assets/images/cupcake.png';
+  static final String chocolate = 'assets/images/choclate.png';
+  static final String cherry = 'assets/images/cherry.png';
+  static final String blackberry = 'assets/images/blackberry.png';
+
+  static final String vegnoodles = 'assets/images/vegnoodles.png';
+  static final String soup = 'assets/images/soup.png';
+  static final String ramen = 'assets/images/ramen.png';
+  static final String noodlessoup = 'assets/images/noodlessoup.png';
+  static final String greensoup = 'assets/images/greensoup.png';
+
+  static final String cappuccino = 'assets/images/cappuccino.png';
+  static final String latte = 'assets/images/latte.png';
+  static final String tea = 'assets/images/tea.png';
+  static final String bluepancake = 'assets/images/blueberrypancake.png';
+  static final String waffles = 'assets/images/waffle.png';
+
+  static final String eggsandwich = 'assets/images/eggsandwich.png';
+  static final String cheesesandwich = 'assets/images/cheesesandwich.png';
+  static final String chickensandwich = 'assets/images/chickensandwich.png';
+  static final String mixedsandwich = 'assets/images/mixedsandwich.png';
+  static final String specialsandwich = 'assets/images/specialsandwich.png';
 }

@@ -74,12 +74,5 @@ class ResturantModel {
       rating: 4.0,
       time: '12 mins',
     ),
-    ResturantModel(
-      image: AssetUtil.suchi,
-      name: 'Sushi Express',
-      category: 'Japanese • Sushi • Rolls',
-      rating: 4.5,
-      time: '30 mins',
-    ),
   ];
 }
