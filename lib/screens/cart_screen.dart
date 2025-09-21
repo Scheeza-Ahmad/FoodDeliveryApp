@@ -13,6 +13,8 @@ class Cartscreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController addressController = TextEditingController();
+
     final CartController cartController = Get.find();
     return SafeArea(
       child: Scaffold(
@@ -105,7 +107,6 @@ class Cartscreen extends StatelessWidget {
           ),
         ),
 
-        // ✅ bottomNavigationBar ka use
         bottomNavigationBar: Container(
           padding: const EdgeInsets.fromLTRB(18, 14, 18, 14),
           height: 260,
@@ -125,8 +126,8 @@ class Cartscreen extends StatelessWidget {
               ),
               const SizedBox(height: 15),
               Inputfield(
-                cont: TextEditingController(),
-                type: TextInputType.emailAddress,
+                cont: addressController,
+                type: TextInputType.text,
                 hint: '2118 ThrownBridge . Cir .Cirasuse',
                 option: false,
               ),
@@ -159,7 +160,24 @@ class Cartscreen extends StatelessWidget {
                 color: Colorutil.color,
                 text: 'PLACE ORDER',
                 action: () {
-                  Get.off(() => Payment());
+                  if (addressController.text.trim().isEmpty) {
+                    Get.dialog(
+                      AlertDialog(
+                        title: Text("Address Required"),
+                        content: Text(
+                          "Please enter your delivery address before placing the order.",
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Get.back(),
+                            child: Text("OK"),
+                          ),
+                        ],
+                      ),
+                    );
+                  } else {
+                    Get.off(() => Payment());
+                  }
                 },
                 height: 50,
               ),

@@ -49,7 +49,6 @@ class Payment extends StatelessWidget {
                 ),
                 const SizedBox(height: 30),
 
-                // Payment options
                 SizedBox(
                   height: 200,
                   child: ListView.builder(
@@ -70,7 +69,6 @@ class Payment extends StatelessWidget {
 
                 const SizedBox(height: 40),
 
-                // Show selected option
                 Obx(() {
                   if (paymentController.hasSelection) {
                     return Column(
@@ -91,7 +89,6 @@ class Payment extends StatelessWidget {
                   return const SizedBox.shrink();
                 }),
 
-                // Total Price
                 Obx(
                   () => Text(
                     'Total : ${cartController.totalPrice.toString()}',
@@ -105,7 +102,6 @@ class Payment extends StatelessWidget {
 
                 const SizedBox(height: 20),
 
-                // Confirm Button
                 Obx(
                   () => Button(
                     color: Colorutil.color,

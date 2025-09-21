@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:food/controller/cart_controller.dart';
+import 'package:food/controller/resturant_menu_controller.dart';
 import 'package:food/models/rose_garden_popular_model.dart';
 import 'package:food/screens/cart_screen.dart';
 import 'package:food/utils/asset_util.dart';
 import 'package:food/utils/color_util.dart';
 import 'package:food/utils/string_util.dart';
 import 'package:food/widgets/icon_btn.dart';
-import 'package:food/widgets/search_bar.dart';
 import 'package:get/get.dart';
 
 class RoseGardenResturantScreen extends StatelessWidget {
@@ -14,8 +14,11 @@ class RoseGardenResturantScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var searchcontroller = TextEditingController();
     final CartController cartController = Get.find();
+
+    final ResturantMenuController menuController = Get.put(
+      ResturantMenuController(RoseGardenPopularModel.popular),
+    );
 
     return SafeArea(
       child: Scaffold(
@@ -44,7 +47,8 @@ class RoseGardenResturantScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 14),
+                  const SizedBox(height: 14),
+
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.asset(
@@ -55,6 +59,7 @@ class RoseGardenResturantScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
+
                   Text(
                     'Rose Garden Resturant',
                     textAlign: TextAlign.center,
@@ -110,14 +115,22 @@ class RoseGardenResturantScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Searchbar(
-                        cont: searchcontroller,
-                        type: TextInputType.text,
-                        hint: 'Search anything from menu',
+                      TextField(
+                        onChanged: (value) {
+                          menuController.updateSearch(value);
+                        },
+                        decoration: InputDecoration(
+                          hintText: "Search anything from menu",
+                          prefixIcon: Icon(Icons.search),
+                          
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(18),
+                          ),
+                        ),
                       ),
+
                       const SizedBox(height: 16),
 
-                      /// Popular Section
                       Row(
                         children: [
                           const Icon(
@@ -147,85 +160,89 @@ class RoseGardenResturantScreen extends StatelessWidget {
 
                       SizedBox(
                         height: 200,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: RoseGardenPopularModel.popular.length,
-                          itemBuilder: (context, index) {
-                            var item = RoseGardenPopularModel.popular[index];
-                            return InkWell(
-                              onTap: () {
-                                cartController.addToCart(item);
-                                Get.snackbar(
-                                  "Added to Cart",
-                                  "${item.name} added successfully",
-                                  snackPosition: SnackPosition.TOP,
-                                  backgroundColor: Colors.green.withOpacity(
-                                    0.7,
+                        child: Obx(
+                          () => ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: menuController.filteredItems.length,
+                            itemBuilder: (context, index) {
+                              var item = menuController.filteredItems[index];
+                              return InkWell(
+                                onTap: () {
+                                  cartController.addToCart(item);
+                                  Get.snackbar(
+                                    "Added to Cart",
+                                    "${item.name} added successfully",
+                                    snackPosition: SnackPosition.TOP,
+                                    backgroundColor: Colors.green.withOpacity(
+                                      0.7,
+                                    ),
+                                    colorText: Colors.white,
+                                  );
+                                },
+                                child: Card(
+                                  elevation: 4,
+                                  margin: const EdgeInsets.symmetric(
+                                    horizontal: 5,
+                                    vertical: 8,
                                   ),
-                                  colorText: Colors.white,
-                                );
-                              },
-                              child: Card(
-                                elevation: 4,
-                                margin: const EdgeInsets.symmetric(
-                                  horizontal: 5,
-                                  vertical: 8,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: Container(
-                                  width: 160,
-                                  padding: const EdgeInsets.all(12),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(12),
-                                        child: Image.asset(
-                                          item.image,
-                                          height: 90,
-                                          width: double.infinity,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      Text(
-                                        item.name,
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            'Starting',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.grey[700],
-                                              fontWeight: FontWeight.w600,
-                                            ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Container(
+                                    width: 160,
+                                    padding: const EdgeInsets.all(12),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            12,
                                           ),
-                                          Text(
-                                            item.price.toString(),
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.grey[700],
-                                              fontWeight: FontWeight.w600,
-                                            ),
+                                          child: Image.asset(
+                                            item.image,
+                                            height: 90,
+                                            width: double.infinity,
+                                            fit: BoxFit.cover,
                                           ),
-                                        ],
-                                      ),
-                                    ],
+                                        ),
+                                        const SizedBox(height: 10),
+                                        Text(
+                                          item.name,
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              'Starting',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.grey[700],
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            Text(
+                                              item.price.toString(),
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.grey[700],
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
-                          },
+                              );
+                            },
+                          ),
                         ),
                       ),
 
@@ -250,57 +267,59 @@ class RoseGardenResturantScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 12),
 
-                      ListView.separated(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: RoseGardenPopularModel.popular.length,
-                        itemBuilder: (context, index) {
-                          var item = RoseGardenPopularModel.popular[index];
-                          return ListTile(
-                            leading: ClipRRect(
-                              borderRadius: BorderRadius.circular(14),
-                              child: CircleAvatar(
-                                backgroundImage: AssetImage(item.image),
+                      Obx(
+                        () => ListView.separated(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: menuController.filteredItems.length,
+                          itemBuilder: (context, index) {
+                            var item = menuController.filteredItems[index];
+                            return ListTile(
+                              leading: ClipRRect(
+                                borderRadius: BorderRadius.circular(14),
+                                child: CircleAvatar(
+                                  backgroundImage: AssetImage(item.image),
+                                ),
                               ),
-                            ),
-                            title: Text(
-                              item.name,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                              title: Text(
+                                item.name,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            subtitle: Text(
-                              item.price.toString(),
-                              style: const TextStyle(
-                                color: Color.fromARGB(255, 63, 62, 62),
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                              subtitle: Text(
+                                item.price.toString(),
+                                style: const TextStyle(
+                                  color: Color.fromARGB(255, 63, 62, 62),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            trailing: Iconbtn(
-                              color: Colorutil.color,
-                              action: () {
-                                cartController.addToCart(item);
-                                Get.snackbar(
-                                  "Added to Cart",
-                                  "${item.name} added successfully",
-                                  snackPosition: SnackPosition.TOP,
-                                  backgroundColor: Colors.green.withOpacity(
-                                    0.7,
-                                  ),
-                                  colorText: Colors.white,
-                                );
-                              },
-                              icon: Icons.add,
-                            ),
-                          );
-                        },
-                        separatorBuilder: (context, index) => Divider(
-                          color: Colors.grey[400],
-                          thickness: 1,
-                          height: 1,
+                              trailing: Iconbtn(
+                                color: Colorutil.color,
+                                action: () {
+                                  cartController.addToCart(item);
+                                  Get.snackbar(
+                                    "Added to Cart",
+                                    "${item.name} added successfully",
+                                    snackPosition: SnackPosition.TOP,
+                                    backgroundColor: Colors.green.withOpacity(
+                                      0.7,
+                                    ),
+                                    colorText: Colors.white,
+                                  );
+                                },
+                                icon: Icons.add,
+                              ),
+                            );
+                          },
+                          separatorBuilder: (context, index) => Divider(
+                            color: Colors.grey[400],
+                            thickness: 1,
+                            height: 1,
+                          ),
                         ),
                       ),
                     ],
@@ -314,4 +333,3 @@ class RoseGardenResturantScreen extends StatelessWidget {
     );
   }
 }
-
