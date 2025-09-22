@@ -27,6 +27,7 @@ class Payment extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 15),
+
                 Row(
                   children: [
                     Iconbtn(
@@ -47,6 +48,7 @@ class Payment extends StatelessWidget {
                     ),
                   ],
                 ),
+
                 const SizedBox(height: 30),
 
                 SizedBox(
@@ -67,31 +69,28 @@ class Payment extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(height: 40),
+                const SizedBox(height: 20),
 
+                // Show selected option
                 Obx(() {
                   if (paymentController.hasSelection) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Selected: ${paymentController.selectedOption.value}",
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                      ],
+                    return Text(
+                      "Selected: ${paymentController.selectedOption.value}",
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
                     );
                   }
                   return const SizedBox.shrink();
                 }),
 
+                const SizedBox(height: 20),
+
                 Obx(
                   () => Text(
-                    'Total : ${cartController.totalPrice.toString()}',
+                    'Total : ${cartController.totalPrice}',
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 20,
@@ -100,24 +99,26 @@ class Payment extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(height: 20),
+                const SizedBox(height: 30),
 
-                Obx(
-                  () => Button(
-                    color: Colorutil.color,
-                    text: 'CONFIRM AND CONTINUE',
-                    action: () {
-                      if (!paymentController.hasSelection) {
-                        Get.snackbar(
-                          "Error",
-                          "Please select a payment option first",
-                        );
-                      } else {
-                        Get.to(() => const Congratulation());
-                      }
-                    },
-                    height: 50,
-                  ),
+                Button(
+                  color: Colorutil.color,
+                  text: 'CONFIRM AND CONTINUE',
+                  action: () {
+                    if (!paymentController.hasSelection) {
+                      Get.snackbar(
+                        "Error",
+                        "Please select a payment option first",
+                        snackPosition: SnackPosition.TOP,
+                      );
+                    } else {
+                      cartController.clearCart();
+                      paymentController.clearSelection();
+
+                      Get.to(() => const Congratulation());
+                    }
+                  },
+                  height: 50,
                 ),
               ],
             ),

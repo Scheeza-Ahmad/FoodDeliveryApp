@@ -32,7 +32,6 @@ class Loginscreen extends StatelessWidget {
         if (passwords[index] == password) {
           Get.snackbar("Success", "Login successful!");
           Get.off(() => const Homescreen());
-          // yahan aap apni HomeScreen ya dashboard le ja sakte ho
         } else {
           Get.snackbar("Error", "Wrong password!");
         }
@@ -221,7 +220,7 @@ class Loginscreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Container(
+                            SizedBox(
                               width: 60,
 
                               child: Divider(
@@ -241,7 +240,7 @@ class Loginscreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            Container(
+                            SizedBox(
                               width: 60,
                               child: Divider(
                                 color: Colors.grey,

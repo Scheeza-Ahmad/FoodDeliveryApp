@@ -12,6 +12,10 @@ class CartController extends GetxController {
     cartItems.remove(product);
   }
 
+  void clearCart() {
+    cartItems.clear();
+  }
+
   double get totalPrice =>
       cartItems.fold(0, (sum, item) => sum + item.price);
 }

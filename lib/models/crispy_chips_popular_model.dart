@@ -2,8 +2,11 @@ import 'package:food/models/base_product.dart';
 import 'package:food/utils/asset_util.dart';
 
 class CrispyChipsPopularModel extends BaseProduct{
+  @override
   final String image;
+  @override
   final String name;
+  @override
   final double price;
   CrispyChipsPopularModel({
     required this.image,

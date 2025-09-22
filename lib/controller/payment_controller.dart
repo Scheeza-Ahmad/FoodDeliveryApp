@@ -8,4 +8,8 @@ class PaymentController extends GetxController {
   }
 
   bool get hasSelection => selectedOption.isNotEmpty;
+
+  void clearSelection() {
+    selectedOption.value = "";
+  }
 }

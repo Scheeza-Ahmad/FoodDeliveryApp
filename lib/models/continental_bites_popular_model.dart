@@ -2,8 +2,11 @@ import 'package:food/models/base_product.dart';
 import 'package:food/utils/asset_util.dart';
 
 class ContinentalBitesPopularModel extends BaseProduct{
+  @override
   final String image;
+  @override
   final String name;
+  @override
   final double price;
   ContinentalBitesPopularModel({
     required this.image,

@@ -2,8 +2,11 @@ import 'package:food/models/base_product.dart';
 import 'package:food/utils/asset_util.dart';
 
 class DesiDelightModel extends BaseProduct{
+  @override
   final String image;
+  @override
   final String name;
+  @override
   final double price;
   DesiDelightModel({
     required this.image,
