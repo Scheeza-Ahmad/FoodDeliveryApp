@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food/screens/home_screen.dart';
+import 'package:food/screens/trace_record_screen.dart';
 import 'package:food/utils/color_util.dart';
 import 'package:food/widgets/last_screen.dart';
 import 'package:get/get.dart';
@@ -26,6 +27,9 @@ class Congratulation extends StatelessWidget {
                 },
                 color: Colorutil.color,
                 lasttext: 'You will recieve your order soon',
+                secondaction: () {
+                  Get.to(() => TraceRecordScreen());
+                },
               ),
             ),
           ),

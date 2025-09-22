@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:food/utils/color_util.dart';
 import 'package:food/widgets/button.dart';
+import 'package:get/get.dart';
+import 'package:get/state_manager.dart';
 import 'package:rating_dialog/rating_dialog.dart' as rating_dialog;
 
 class RatingDialog extends StatelessWidget {
@@ -15,6 +17,8 @@ class RatingDialog extends StatelessWidget {
         color: Colorutil.color,
         text: 'Rate our App',
         action: () => showRatingDialog(context, theme),
+        width: 220,
+        height: 50,
       ),
     );
   }
@@ -40,6 +44,7 @@ class RatingDialog extends StatelessWidget {
         commentHint: 'Please provide your feedback',
         onCancelled: () => print('cancelled'),
         onSubmitted: (response) {
+          Get.snackbar('Thanks', 'Your Feedback is submitted!!');
           print('rating: ${response.rating}, comment: ${response.comment}');
         },
       ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food/widgets/button.dart';
-import 'package:food/widgets/rating_button.dart';
+import 'package:lottie/lottie.dart';
 
 class LastScreen extends StatelessWidget {
   final String image;
@@ -8,9 +8,10 @@ class LastScreen extends StatelessWidget {
   final String text;
   final String lasttext;
   final String btntext;
-
+  final String sbtntext;
   final Color color;
   final VoidCallback action;
+  final VoidCallback secondaction;
 
   const LastScreen({
     super.key,
@@ -21,13 +22,15 @@ class LastScreen extends StatelessWidget {
     required this.action,
     required this.color,
     required this.lasttext,
+    this.sbtntext = 'Trace Order',
+    required this.secondaction,
   });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Image.asset(image, height: 300),
+        Lottie.asset('assets/animations/Sucesso.json', width: 600),
         SizedBox(height: 20),
         Text(
           heading,
@@ -39,12 +42,13 @@ class LastScreen extends StatelessWidget {
         ),
         SizedBox(height: 12),
         Text(text, style: TextStyle(color: Colors.grey[600], fontSize: 14)),
-                SizedBox(height: 12),
+        SizedBox(height: 12),
         Text(lasttext, style: TextStyle(color: Colors.grey[600], fontSize: 14)),
-        SizedBox(height: 22),
-        RatingDialog(),
-        SizedBox(height: 18,),
+        SizedBox(height: 18),
+
         Button(color: color, text: btntext, action: action, height: 60),
+        SizedBox(height: 18),
+        Button(color: color, text: sbtntext, action: secondaction, height: 60),
       ],
     );
   }

@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:food/controller/cart_controller.dart';
+import 'package:food/controller/resturant_controller.dart';
 import 'package:food/models/homepage_card.dart';
-import 'package:food/models/resturant_model.dart';
 import 'package:food/screens/cart_screen.dart';
 import 'package:food/utils/color_util.dart';
 import 'package:food/utils/string_util.dart';
 import 'package:food/widgets/icon_btn.dart';
 import 'package:food/widgets/resturant.dart';
-import 'package:food/widgets/search_bar.dart';
 import 'package:get/get.dart';
 
 class Homescreen extends StatelessWidget {
-  const Homescreen({super.key});
+  Homescreen({super.key});
+
+  final TextEditingController searchController = TextEditingController();
+  final CartController cartController = Get.find();
+  final RestaurantController restaurantController = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    final SearchController = TextEditingController();
-    final CartController cartController = Get.find();
-
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -25,49 +25,46 @@ class Homescreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'DELIVER TO',
-                              style: TextStyle(
-                                color: Colorutil.color,
-                                fontSize: Stringutil.content,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              'Halal Lab office',
-                              style: TextStyle(
-                                color: Colors.grey[700],
-                                fontSize: Stringutil.content,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
+                        Text(
+                          'DELIVER TO',
+                          style: TextStyle(
+                            color: Colorutil.color,
+                            fontSize: Stringutil.content,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          'Halal Lab office',
+                          style: TextStyle(
+                            color: Colors.grey[700],
+                            fontSize: Stringutil.content,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ],
                     ),
                     Iconbtn(
-                      color: Color(0xff181C2E),
+                      color: const Color(0xff181C2E),
                       action: () {
-                        Get.to(() => Cartscreen());
+                        Get.to(() => const Cartscreen());
                       },
                       icon: Icons.trolley,
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Text(
-                      'Hey Halal,',
+                      'Hey Halal, ',
                       style: TextStyle(
                         color: Colors.grey[700],
                         fontSize: Stringutil.mainsize,
@@ -83,13 +80,22 @@ class Homescreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
-                Searchbar(
-                  cont: SearchController,
-                  type: TextInputType.name,
-                  hint: 'Search dishes,resturant',
+
+                const SizedBox(height: 20),
+                TextField(
+                  onChanged: (value) {
+                    restaurantController.searchQuery.value = value;
+                  },
+                  decoration: InputDecoration(
+                    hintText: "Search anything from menu",
+                    prefixIcon: Icon(Icons.search),
+
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                  ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -103,7 +109,8 @@ class Homescreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 15),
+
+                const SizedBox(height: 15),
                 SizedBox(
                   height: 200,
                   child: ListView.builder(
@@ -122,7 +129,6 @@ class Homescreen extends StatelessWidget {
                             colorText: Colors.white,
                           );
                         },
-
                         child: Card(
                           elevation: 4,
                           margin: const EdgeInsets.symmetric(
@@ -148,7 +154,6 @@ class Homescreen extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 10),
-
                                 Text(
                                   item.name,
                                   style: const TextStyle(
@@ -156,7 +161,6 @@ class Homescreen extends StatelessWidget {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -169,7 +173,6 @@ class Homescreen extends StatelessWidget {
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
-
                                     Text(
                                       item.price.toString(),
                                       style: TextStyle(
@@ -188,12 +191,13 @@ class Homescreen extends StatelessWidget {
                     },
                   ),
                 ),
-                SizedBox(height: 20),
+
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Open Resturants',
+                      'Open Restaurants',
                       style: TextStyle(
                         fontSize: Stringutil.mainsize,
                         color: Colors.grey[700],
@@ -202,16 +206,29 @@ class Homescreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
 
-                ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: ResturantModel.resturant.length,
-                  itemBuilder: (context, index) {
-                    return Resturant(restu: ResturantModel.resturant[index]);
-                  },
-                ),
+                // 🔥 Filtered Restaurants
+                Obx(() {
+                  if (restaurantController.filteredRestaurants.isEmpty) {
+                    return const Center(
+                      child: Text(
+                        "No restaurant found",
+                        style: TextStyle(color: Colors.grey, fontSize: 16),
+                      ),
+                    );
+                  }
+                  return ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: restaurantController.filteredRestaurants.length,
+                    itemBuilder: (context, index) {
+                      return Resturant(
+                        restu: restaurantController.filteredRestaurants[index],
+                      );
+                    },
+                  );
+                }),
               ],
             ),
           ),
