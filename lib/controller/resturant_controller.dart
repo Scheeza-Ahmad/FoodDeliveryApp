@@ -8,10 +8,8 @@ class RestaurantController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // Pehle se sari restaurants dikhao
     filteredRestaurants.assignAll(ResturantModel.resturant);
 
-    // Jab bhi searchQuery change ho to filter karo
     ever(searchQuery, (_) => filterRestaurants());
   }
 

@@ -18,6 +18,7 @@ class RoseGardenResturantScreen extends StatelessWidget {
 
     final ResturantMenuController menuController = Get.put(
       ResturantMenuController(RoseGardenPopularModel.popular),
+      tag: 'rose_garden'
     );
 
     return SafeArea(

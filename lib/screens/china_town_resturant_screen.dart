@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food/controller/cart_controller.dart';
 import 'package:food/controller/resturant_menu_controller.dart';
 import 'package:food/models/china_town_popular_model.dart';
+import 'package:food/screens/cart_screen.dart';
 import 'package:food/utils/asset_util.dart';
 import 'package:food/utils/color_util.dart';
 import 'package:food/utils/string_util.dart';
@@ -16,8 +17,8 @@ class ChinaTownResturantScreen extends StatelessWidget {
     final CartController cartController = Get.find();
     final ResturantMenuController menuController = Get.put(
       ResturantMenuController(ChinaTownPopularModel.popular),
+      tag: "china_town",
     );
-
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -26,6 +27,26 @@ class ChinaTownResturantScreen extends StatelessWidget {
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Iconbtn(
+                        color: Colors.grey.shade700,
+                        action: () {
+                          Get.back();
+                        },
+                        icon: Icons.arrow_back,
+                      ),
+                      Iconbtn(
+                        color: Colors.grey.shade700,
+                        action: () {
+                          Get.to(() => Cartscreen());
+                        },
+                        icon: Icons.trolley,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 14),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.asset(
@@ -138,9 +159,9 @@ class ChinaTownResturantScreen extends StatelessWidget {
                         child: Obx(
                           () => ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount: ChinaTownPopularModel.popular.length,
+                            itemCount: menuController.filteredItems.length,
                             itemBuilder: (context, index) {
-                              var item = ChinaTownPopularModel.popular[index];
+                              var item = menuController.filteredItems[index];
                               return InkWell(
                                 onTap: () {
                                   cartController.addToCart(item);
@@ -246,9 +267,9 @@ class ChinaTownResturantScreen extends StatelessWidget {
                         () => ListView.separated(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          itemCount: ChinaTownPopularModel.popular.length,
+                          itemCount: menuController.filteredItems.length,
                           itemBuilder: (context, index) {
-                            var item = ChinaTownPopularModel.popular[index];
+                            var item = menuController.filteredItems[index];
                             return ListTile(
                               leading: ClipRRect(
                                 borderRadius: BorderRadius.circular(14),

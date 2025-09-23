@@ -3,7 +3,7 @@ import 'package:food/controller/cart_controller.dart';
 import 'package:food/controller/payment_controller.dart';
 import 'package:food/controller/resturant_controller.dart';
 import 'package:food/controller/trace_record_controller.dart';
-import 'package:food/screens/cart_screen.dart';
+import 'package:food/screens/firstsplash_screen.dart';
 
 import 'package:get/get.dart';
 
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
 
-      home: Scaffold(body: Cartscreen()),
+      home: Scaffold(body:Firstsplashscreen(),),
     );
   }
 }
