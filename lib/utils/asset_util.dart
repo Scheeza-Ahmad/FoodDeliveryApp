@@ -77,4 +77,11 @@ class AssetUtil {
   static final String chickensandwich = 'assets/images/chickensandwich.png';
   static final String mixedsandwich = 'assets/images/mixedsandwich.png';
   static final String specialsandwich = 'assets/images/specialsandwich.png';
+
+  static final String success = 'assets/animations/Sucesso.json';
+  static final String delivery = 'assets/animations/delivery.json';
+  static final String confirmed = 'assets/images/confirmed.png';
+  static final String packed = 'assets/images/packed.png';
+  static final String dispatched = 'assets/images/dispatched.png';
+  static final String recieved = 'assets/images/received.png';
 }

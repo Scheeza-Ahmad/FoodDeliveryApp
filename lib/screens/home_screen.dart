@@ -87,7 +87,7 @@ class Homescreen extends StatelessWidget {
                     restaurantController.searchQuery.value = value;
                   },
                   decoration: InputDecoration(
-                    hintText: "Search anything from menu",
+                    hintText: "Search your favourite resturant",
                     prefixIcon: Icon(Icons.search),
 
                     border: OutlineInputBorder(

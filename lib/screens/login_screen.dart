@@ -31,7 +31,7 @@ class Loginscreen extends StatelessWidget {
         int index = emails.indexOf(email);
         if (passwords[index] == password) {
           Get.snackbar("Success", "Login successful!");
-          Get.off(() => Homescreen());
+          Get.offAll(() => Homescreen());
         } else {
           Get.snackbar("Error", "Wrong password!");
         }

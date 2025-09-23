@@ -24,7 +24,7 @@ class Fourthscreen extends StatelessWidget {
                     'Get all your loved foods in one place. You just place the order, we do the rest',
                 btntext: 'Get Started',
                 action: () {
-                  Get.to(() => Loginscreen());
+                  Get.offAll(() => Loginscreen());
                 },
                 color: Colorutil.color,
               ),

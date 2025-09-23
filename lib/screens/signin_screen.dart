@@ -28,14 +28,13 @@ class Signin extends StatelessWidget {
         Get.snackbar('Error', 'You are already a user. Please Login');
         Get.to(() => const Loginscreen());
       } else {
-        // new user save karna
         emails.add(email);
         passwords.add(password);
         await pref.setStringList("emails", emails);
         await pref.setStringList("passwords", passwords);
 
         Get.snackbar('Success', 'Signup successful. Welcome!');
-        Get.off(() =>  Homescreen());
+        Get.offAll(() =>  Homescreen());
       }
     }
 

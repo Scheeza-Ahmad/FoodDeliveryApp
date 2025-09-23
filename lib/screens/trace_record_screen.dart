@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food/screens/home_screen.dart';
+import 'package:food/utils/asset_util.dart';
 import 'package:food/utils/string_util.dart';
 import 'package:food/widgets/circular_image.dart';
 import 'package:food/widgets/icon_btn.dart';
@@ -50,7 +51,7 @@ class TraceRecordScreen extends StatelessWidget {
                     ],
                   ),
                   Lottie.asset(
-                    'assets/animations/delivery.json',
+                    AssetUtil.delivery,
                     width: 600,
                     fit: BoxFit.cover,
                   ),

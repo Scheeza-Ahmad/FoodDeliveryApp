@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food/controller/cart_controller.dart';
 import 'package:food/controller/payment_controller.dart';
+import 'package:food/controller/trace_record_controller.dart';
 import 'package:food/models/payment_card.dart';
 import 'package:food/screens/home_screen.dart';
 import 'package:food/screens/congratulation_screen.dart';
@@ -16,8 +17,8 @@ class Payment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final CartController cartController = Get.find();
-    final PaymentController paymentController = Get.put(PaymentController());
-
+    final PaymentController paymentController = Get.find();
+    final TraceRecordController traceController = Get.find();
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -71,7 +72,6 @@ class Payment extends StatelessWidget {
 
                 const SizedBox(height: 20),
 
-                // Show selected option
                 Obx(() {
                   if (paymentController.hasSelection) {
                     return Text(
@@ -114,6 +114,7 @@ class Payment extends StatelessWidget {
                     } else {
                       cartController.clearCart();
                       paymentController.clearSelection();
+                      traceController.startTrace();
 
                       Get.to(() => const Congratulation());
                     }

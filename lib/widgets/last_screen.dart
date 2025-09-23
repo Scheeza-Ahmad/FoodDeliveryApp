@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food/utils/asset_util.dart';
 import 'package:food/widgets/button.dart';
 import 'package:lottie/lottie.dart';
 
@@ -30,7 +31,7 @@ class LastScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Lottie.asset('assets/animations/Sucesso.json', width: 600),
+        Lottie.asset(AssetUtil.success, width: 600),
         SizedBox(height: 20),
         Text(
           heading,

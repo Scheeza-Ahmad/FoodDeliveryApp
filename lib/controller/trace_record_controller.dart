@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:food/utils/asset_util.dart';
 import 'package:get/get.dart';
 
 class TraceRecordController extends GetxController {
@@ -6,24 +7,22 @@ class TraceRecordController extends GetxController {
   Timer? timer;
 
   final List<String> stages = [
-    'assets/images/confirmed.png',
-    'assets/images/packed.png',
-    'assets/images/dispatched.png',
-    'assets/images/received.png',
+    AssetUtil.confirmed,
+    AssetUtil.packed,
+    AssetUtil.dispatched,
+    AssetUtil.recieved,
   ];
 
-  @override
-  void onInit() {
-    super.onInit();
+  void startTrace() {
+    activeStage.value = 0; // reset
+    timer?.cancel();
 
-    // Pehla stage 2 sec baad active hoga
     Future.delayed(const Duration(seconds: 2), () {
       activeStage.value = 1;
 
-      // Baaki har 10 min baad next stage activate hoga
       int index = 2;
       timer = Timer.periodic(const Duration(seconds: 8), (t) {
-        if (index <= stages.length) {
+        if (index < stages.length) {
           activeStage.value = index;
           index++;
         } else {

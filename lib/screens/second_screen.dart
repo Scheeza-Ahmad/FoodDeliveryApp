@@ -24,7 +24,7 @@ class Secondscreen extends StatelessWidget {
                     'Get all your loved foods in one place.You just place the order we do the rest',
                 btntext: 'Next',
                 action: () {
-                  Get.to(()=>Thirdscreen());
+                  Get.offAll(()=>Thirdscreen());
                 },
                 color: Colorutil.color,
                 secondbtn: Colors.grey.shade600,
