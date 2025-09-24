@@ -44,7 +44,7 @@ class TraceRecordScreen extends StatelessWidget {
                       Iconbtn(
                         color: Colors.grey.shade700,
                         action: () {
-                          Get.to(() => Homescreen());
+                          Get.offAll(() => Homescreen());
                         },
                         icon: Icons.home,
                       ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food/controller/eye_controller.dart';
 import 'package:get/get.dart';
 
-class InputPassword extends StatelessWidget {
+class InputPassword extends StatefulWidget {
   final TextEditingController cont;
   final TextInputType type;
   final String hint;
@@ -17,19 +17,46 @@ class InputPassword extends StatelessWidget {
   });
 
   @override
+  State<InputPassword> createState() => _InputPasswordState();
+}
+
+class _InputPasswordState extends State<InputPassword> {
+  final FocusNode _focusNode = FocusNode();
+  bool _isFocused = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(() {
+      setState(() {
+        _isFocused = _focusNode.hasFocus;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Obx(
       () => TextField(
-        controller: cont,
-        keyboardType: type,
-        obscureText: controller.obsecuretext.value,
+        focusNode: _focusNode,
+        controller: widget.cont,
+        keyboardType: widget.type,
+        obscureText: widget.controller.obsecuretext.value,
         style: const TextStyle(color: Colors.grey),
         decoration: InputDecoration(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide.none,
+            borderSide: _isFocused
+                ? const BorderSide(color: Colors.blue, width: 1.2) // Focused
+                : BorderSide.none, // Not focused
           ),
-          hintText: hint,
+          hintText: widget.hint,
           hintStyle: TextStyle(color: Colors.grey.shade400),
           labelStyle: const TextStyle(color: Colors.black),
           filled: true,
@@ -40,12 +67,12 @@ class InputPassword extends StatelessWidget {
           ),
           suffixIcon: IconButton(
             icon: Icon(
-              controller.obsecuretext.value
+              widget.controller.obsecuretext.value
                   ? Icons.visibility_off
                   : Icons.visibility,
             ),
             onPressed: () {
-              controller.toogle();
+              widget.controller.toogle();
             },
           ),
           errorBorder: OutlineInputBorder(

@@ -155,85 +155,104 @@ class ChinaTownResturantScreen extends StatelessWidget {
                       const SizedBox(height: 12),
 
                       SizedBox(
-                        height: 200,
+                        height: 230,
                         child: Obx(
                           () => ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: menuController.filteredItems.length,
                             itemBuilder: (context, index) {
                               var item = menuController.filteredItems[index];
-                              return InkWell(
-                                onTap: () {
-                                  cartController.addToCart(item);
-                                  Get.snackbar(
-                                    "Added to Cart",
-                                    "${item.name} added successfully",
-                                    snackPosition: SnackPosition.TOP,
-                                    backgroundColor: Colors.green.withOpacity(
-                                      0.7,
-                                    ),
-                                    colorText: Colors.white,
-                                  );
-                                },
-                                child: Card(
-                                  elevation: 4,
-                                  margin: const EdgeInsets.symmetric(
-                                    horizontal: 5,
-                                    vertical: 8,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  child: Container(
-                                    width: 160,
-                                    padding: const EdgeInsets.all(12),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius: BorderRadius.circular(
-                                            12,
-                                          ),
-                                          child: Image.asset(
-                                            item.image,
-                                            height: 90,
-                                            width: double.infinity,
-                                            fit: BoxFit.cover,
-                                          ),
+                              return Card(
+                                elevation: 4,
+                                margin: const EdgeInsets.symmetric(
+                                  horizontal: 5,
+                                  vertical: 8,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Container(
+                                  width: 160,
+                                  padding: const EdgeInsets.all(12),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(12),
+                                        child: Image.asset(
+                                          item.image,
+                                          height: 90,
+                                          width: double.infinity,
+                                          fit: BoxFit.cover,
                                         ),
-                                        const SizedBox(height: 10),
-                                        Text(
-                                          item.name,
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                        item.name,
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              'Starting',
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.grey[700],
-                                                fontWeight: FontWeight.w600,
-                                              ),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'Starting',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.grey[700],
+                                              fontWeight: FontWeight.w600,
                                             ),
-                                            Text(
-                                              item.price.toString(),
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.grey[700],
-                                                fontWeight: FontWeight.w600,
-                                              ),
+                                          ),
+                                          Text(
+                                            item.price.toString(),
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.grey[700],
+                                              fontWeight: FontWeight.w600,
                                             ),
-                                          ],
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 8),
+                                      SizedBox(
+                                        width: double.infinity,
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            cartController.addToCart(item);
+                                            Get.snackbar(
+                                              "Added to Cart",
+                                              "${item.name} added successfully",
+                                              snackPosition: SnackPosition.TOP,
+                                              backgroundColor: Colors.green
+                                                  .withOpacity(0.7),
+                                              colorText: Colors.white,
+                                            );
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.green,
+                                            foregroundColor: Colors.white,
+                                            padding: const EdgeInsets.symmetric(
+                                              vertical: 8,
+                                            ),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                          ),
+                                          child: const Text(
+                                            'Add to Cart',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               );

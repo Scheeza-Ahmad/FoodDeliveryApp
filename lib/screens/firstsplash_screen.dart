@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food/screens/second_screen.dart';
+import 'package:food/screens/onboarding_screen.dart';
 import 'package:food/utils/asset_util.dart';
 import 'package:get/get.dart';
 
@@ -9,7 +9,7 @@ class Firstsplashscreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 3), () {
-      Get.offAll(() => const Secondscreen());
+      Get.offAll(() => OnboardingScreen());
     });
 
     return SafeArea(

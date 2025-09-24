@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:food/controller/eye_controller.dart';
-import 'package:food/screens/home_screen.dart';
 import 'package:food/screens/login_screen.dart';
 import 'package:food/utils/string_util.dart';
 import 'package:food/widgets/button.dart';
@@ -34,7 +33,7 @@ class Signin extends StatelessWidget {
         await pref.setStringList("passwords", passwords);
 
         Get.snackbar('Success', 'Signup successful. Welcome!');
-        Get.offAll(() =>  Homescreen());
+        Get.offAll(() =>  Loginscreen());
       }
     }
 

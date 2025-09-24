@@ -14,17 +14,17 @@ class Cartscreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextEditingController addressController = TextEditingController();
-
     final CartController cartController = Get.find();
+
     return SafeArea(
       child: Scaffold(
         body: Container(
-          color: Color(0xff121223),
+          color: const Color(0xff121223),
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
               children: [
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -32,13 +32,11 @@ class Cartscreen extends StatelessWidget {
                       children: [
                         Iconbtn(
                           color: Colors.grey.shade600,
-                          action: () {
-                            Get.back();
-                          },
+                          action: () => Get.back(),
                           icon: Icons.arrow_back,
                         ),
-                        SizedBox(width: 10),
-                        Text(
+                        const SizedBox(width: 10),
+                        const Text(
                           'Cart',
                           style: TextStyle(
                             fontSize: 20,
@@ -48,12 +46,9 @@ class Cartscreen extends StatelessWidget {
                         ),
                       ],
                     ),
-
                     InkWell(
-                      onTap: () {
-                        Get.to(() => Homescreen());
-                      },
-                      child: Text(
+                      onTap: () => Get.to(() =>  Homescreen()),
+                      child: const Text(
                         'Continue Shopping',
                         style: TextStyle(
                           fontSize: 16,
@@ -64,7 +59,7 @@ class Cartscreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Expanded(
                   child: Obx(
                     () => ListView.separated(
@@ -72,7 +67,10 @@ class Cartscreen extends StatelessWidget {
                       separatorBuilder: (context, index) =>
                           Divider(color: Colors.grey.shade300, thickness: 1),
                       itemBuilder: (context, index) {
-                        var item = cartController.cartItems[index];
+                        var entry = cartController.cartItems.entries.toList()[index];
+                        var item = entry.key;
+                        var quantity = entry.value;
+
                         return ListTile(
                           leading: Image.asset(
                             item.image,
@@ -82,24 +80,35 @@ class Cartscreen extends StatelessWidget {
                           ),
                           title: Text(
                             item.name,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                               fontSize: 16,
                             ),
                           ),
                           subtitle: Text(
-                            "PKR ${item.price}",
-                            style: TextStyle(color: Colors.white, fontSize: 14),
+                            "PKR ${item.price * quantity} (x$quantity)",
+                            style: const TextStyle(color: Colors.white, fontSize: 14),
                           ),
-                          trailing: IconButton(
-                            icon: const Icon(
-                              Icons.remove_circle,
-                              color: Colors.red,
-                            ),
-                            onPressed: () {
-                              cartController.removeFromCart(item);
-                            },
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.remove_circle, color: Colors.red),
+                                onPressed: () => cartController.removeFromCart(item),
+                              ),
+                              Text(
+                                "$quantity",
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16),
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.add_circle, color: Colors.green),
+                                onPressed: () => cartController.addToCart(item),
+                              ),
+                            ],
                           ),
                         );
                       },
@@ -115,8 +124,8 @@ class Cartscreen extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.fromLTRB(18, 14, 18, 14),
             height: 260,
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.only(
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),
               ),
@@ -150,7 +159,7 @@ class Cartscreen extends StatelessWidget {
                     const SizedBox(width: 8),
                     Obx(
                       () => Text(
-                        cartController.totalPrice.toString(),
+                        "PKR ${cartController.totalPrice}",
                         style: TextStyle(
                           color: Colors.grey.shade500,
                           fontWeight: FontWeight.bold,

@@ -23,7 +23,7 @@ class Congratulation extends StatelessWidget {
                 text: 'Your Order Is Placed Successfully!!!',
                 btntext: 'CONTINUE YOUR FOOD HUNT',
                 action: () {
-                  Get.to(() => Homescreen());
+                  Get.offAll(() => Homescreen());
                 },
                 color: Colorutil.color,
                 lasttext: 'You will recieve your order soon',

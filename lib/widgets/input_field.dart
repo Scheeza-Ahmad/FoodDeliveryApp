@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-class Inputfield extends StatelessWidget {
+class Inputfield extends StatefulWidget {
   final TextEditingController cont;
   final TextInputType type;
   final String hint;
   final bool option;
   final IconData icon;
+
   const Inputfield({
     super.key,
     required this.cont,
@@ -16,29 +17,54 @@ class Inputfield extends StatelessWidget {
   });
 
   @override
+  State<Inputfield> createState() => _InputfieldState();
+}
+
+class _InputfieldState extends State<Inputfield> {
+  final FocusNode _focusNode = FocusNode();
+  bool _isFocused = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(() {
+      setState(() {
+        _isFocused = _focusNode.hasFocus;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return TextField(
-      controller: cont,
-      keyboardType: type,
-      obscureText: option,
-
+      focusNode: _focusNode,
+      controller: widget.cont,
+      keyboardType: widget.type,
+      obscureText: widget.option,
       style: const TextStyle(color: Colors.grey),
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide.none,
+          borderSide: _isFocused
+              ? const BorderSide(color: Colors.blue, width: 1.2) // Focused
+              : BorderSide.none, // Not focused
         ),
-
-        hintText: hint,
+        hintText: widget.hint,
         hintStyle: TextStyle(color: Colors.grey.shade400),
-        labelStyle: TextStyle(color: Colors.black),
+        labelStyle: const TextStyle(color: Colors.black),
         filled: true,
         fillColor: Colors.black.withOpacity(0.1),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 16,
         ),
-        suffixIcon: option ? Icon(icon) : null,
+        suffixIcon: widget.option ? Icon(widget.icon) : null,
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: Colors.red, width: 1.2),

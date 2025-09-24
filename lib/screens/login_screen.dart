@@ -18,10 +18,11 @@ class Loginscreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final namecontroller = TextEditingController();
-    final passwordcontroller = TextEditingController();
+    final emailController = TextEditingController();
+    final passwordController = TextEditingController();
     final EyeController controller = EyeController();
-    final TickController control = TickController();
+    final TickController tickController = TickController();
+
     Future<void> loginUser(String email, String password) async {
       final pref = await SharedPreferences.getInstance();
       List<String> emails = pref.getStringList("emails") ?? [];
@@ -30,6 +31,9 @@ class Loginscreen extends StatelessWidget {
       if (emails.contains(email)) {
         int index = emails.indexOf(email);
         if (passwords[index] == password) {
+          // ✅ Save login status
+          await pref.setBool("isLoggedIn", true);
+
           Get.snackbar("Success", "Login successful!");
           Get.offAll(() => Homescreen());
         } else {
@@ -48,6 +52,7 @@ class Loginscreen extends StatelessWidget {
           children: [
             Container(color: const Color(0xFF121223)),
 
+            // 🔹 Heading
             Positioned(
               bottom: 470,
               left: 0,
@@ -63,7 +68,7 @@ class Loginscreen extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Please Sign In to your exsisting Account',
+                    'Please Sign In to your existing Account',
                     style: TextStyle(
                       fontSize: Stringutil.mainsize,
                       color: const Color(0xFFC2C2C7),
@@ -74,6 +79,7 @@ class Loginscreen extends StatelessWidget {
               ),
             ),
 
+            // 🔹 Form Area
             Positioned(
               bottom: 0,
               left: 0,
@@ -93,6 +99,7 @@ class Loginscreen extends StatelessWidget {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
+                        // Email field
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
@@ -104,15 +111,15 @@ class Loginscreen extends StatelessWidget {
                             ),
                           ),
                         ),
-
                         Inputfield(
-                          cont: namecontroller,
+                          cont: emailController,
                           type: TextInputType.emailAddress,
                           hint: 'example@gmail.com',
                           option: false,
                         ),
-
                         const SizedBox(height: 27),
+
+                        // Password field
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
@@ -125,12 +132,14 @@ class Loginscreen extends StatelessWidget {
                           ),
                         ),
                         InputPassword(
-                          cont: passwordcontroller,
+                          cont: passwordController,
                           type: TextInputType.text,
                           hint: 'Password',
                           controller: controller,
                         ),
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
+
+                        // Remember Me + Forget Password
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -139,13 +148,12 @@ class Loginscreen extends StatelessWidget {
                                 Obx(
                                   () => IconButton(
                                     onPressed: () {
-                                      control.toogle();
+                                      tickController.toogle();
                                     },
                                     icon: Icon(
-                                      control.tick.value
-                                          ? Icons
-                                                .check_box_outline_blank_outlined
-                                          : Icons.check_box,
+                                      tickController.tick.value
+                                          ? Icons.check_box
+                                          : Icons.check_box_outline_blank_outlined,
                                     ),
                                   ),
                                 ),
@@ -163,52 +171,52 @@ class Loginscreen extends StatelessWidget {
                               onTap: () {
                                 Get.to(() => Forgetpassword());
                               },
-                              child: Text(
+                              child: const Text(
                                 'Forget Password',
                                 style: TextStyle(
                                   color: Color(0xFFFF7622),
                                   fontWeight: FontWeight.w400,
-                                  fontSize: Stringutil.mainsize,
                                 ),
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(height: 17),
+                        const SizedBox(height: 17),
+
+                        // Login Button
                         Button(
-                          color: Color(0xFFFF7622),
+                          color: const Color(0xFFFF7622),
                           text: 'LOGIN',
                           action: () {
-                            var name = namecontroller.text.trim();
-                            var password = passwordcontroller.text.trim();
-                            if (name.isNotEmpty && password.isNotEmpty) {
-                              loginUser(name, password);
+                            var email = emailController.text.trim();
+                            var password = passwordController.text.trim();
+                            if (email.isNotEmpty && password.isNotEmpty) {
+                              loginUser(email, password);
                             } else {
                               Get.snackbar("Error", "Please enter all fields");
                             }
                           },
                         ),
-                        SizedBox(height: 14),
+                        const SizedBox(height: 14),
+
+                        // Sign up link
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              "Don't have an account?",
+                            const Text(
+                              "Don't have an account? ",
                               style: TextStyle(
-                                color: const Color.fromARGB(255, 153, 152, 152),
-                                fontSize: Stringutil.mainsize,
-                                fontWeight: FontWeight.w400,
+                                color: Color.fromARGB(255, 153, 152, 152),
                               ),
                             ),
                             InkWell(
                               onTap: () {
-                                Get.to(() => Signin());
+                                Get.to(() => const Signin());
                               },
-                              child: Text(
+                              child: const Text(
                                 'SIGN UP',
                                 style: TextStyle(
                                   color: Color(0xFFFF7622),
-                                  fontSize: Stringutil.mainsize,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -216,22 +224,18 @@ class Loginscreen extends StatelessWidget {
                           ],
                         ),
 
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
+
+                        // Divider OR
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               width: 60,
-
-                              child: Divider(
-                                color: Colors.grey,
-                                thickness: 1.2,
-                              ),
+                              child: Divider(color: Colors.grey, thickness: 1.2),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8.0,
-                              ),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 8.0),
                               child: Text(
                                 'OR',
                                 style: TextStyle(
@@ -240,46 +244,35 @@ class Loginscreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 60,
-                              child: Divider(
-                                color: Colors.grey,
-                                thickness: 1.2,
-                              ),
+                              child: Divider(color: Colors.grey, thickness: 1.2),
                             ),
                           ],
                         ),
 
-                        SizedBox(height: 16),
-                        Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Iconbutton(
-                                color: Color(0xff395998),
-                                image: AssetUtil.facebook,
-                                action: () {
-                                  Get.to('');
-                                },
-                              ),
-                              Iconbutton(
-                                color: Color(0xff1CB7EB),
-                                image: AssetUtil.twitter,
+                        const SizedBox(height: 16),
 
-                                action: () {
-                                  Get.to('');
-                                },
-                              ),
-                              Iconbutton(
-                                color: Colors.black,
-                                image: AssetUtil.apple,
-
-                                action: () {
-                                  Get.to('');
-                                },
-                              ),
-                            ],
-                          ),
+                        // Social login buttons
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Iconbutton(
+                              color: const Color(0xff395998),
+                              image: AssetUtil.facebook,
+                              action: () {},
+                            ),
+                            Iconbutton(
+                              color: const Color(0xff1CB7EB),
+                              image: AssetUtil.twitter,
+                              action: () {},
+                            ),
+                            Iconbutton(
+                              color: Colors.black,
+                              image: AssetUtil.apple,
+                              action: () {},
+                            ),
+                          ],
                         ),
                       ],
                     ),
