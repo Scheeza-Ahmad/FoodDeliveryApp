@@ -5,6 +5,7 @@ import 'package:food/screens/forgetpassword_screen.dart';
 import 'package:food/screens/home_screen.dart';
 import 'package:food/screens/signin_screen.dart';
 import 'package:food/utils/asset_util.dart';
+import 'package:food/utils/color_util.dart';
 import 'package:food/utils/string_util.dart';
 import 'package:food/widgets/button.dart';
 import 'package:food/widgets/icon_button.dart';
@@ -12,6 +13,7 @@ import 'package:food/widgets/input_password.dart';
 import 'package:food/widgets/input_field.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Loginscreen extends StatelessWidget {
   const Loginscreen({super.key});
@@ -33,14 +35,37 @@ class Loginscreen extends StatelessWidget {
         if (passwords[index] == password) {
           // ✅ Save login status
           await pref.setBool("isLoggedIn", true);
+          Fluttertoast.showToast(
+            msg: 'Login successful!',
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colorutil.color,
 
-          Get.snackbar("Success", "Login successful!");
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
           Get.offAll(() => Homescreen());
         } else {
-          Get.snackbar("Error", "Wrong password!");
+          Fluttertoast.showToast(
+            msg: 'Wrong password!',
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colorutil.color,
+
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
         }
       } else {
-        Get.snackbar("Error", "No account found. Please signup first.");
+        Fluttertoast.showToast(
+          msg: 'No account found. Please signup first.',
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colorutil.color,
+
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
         Get.to(() => const Signin());
       }
     }
@@ -153,7 +178,8 @@ class Loginscreen extends StatelessWidget {
                                     icon: Icon(
                                       tickController.tick.value
                                           ? Icons.check_box
-                                          : Icons.check_box_outline_blank_outlined,
+                                          : Icons
+                                                .check_box_outline_blank_outlined,
                                     ),
                                   ),
                                 ),
@@ -193,7 +219,15 @@ class Loginscreen extends StatelessWidget {
                             if (email.isNotEmpty && password.isNotEmpty) {
                               loginUser(email, password);
                             } else {
-                              Get.snackbar("Error", "Please enter all fields");
+                              Fluttertoast.showToast(
+                                msg: 'Please enter all fields',
+                                gravity: ToastGravity.CENTER,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colorutil.color,
+
+                                textColor: Colors.white,
+                                fontSize: 16.0,
+                              );
                             }
                           },
                         ),
@@ -232,7 +266,10 @@ class Loginscreen extends StatelessWidget {
                           children: [
                             const SizedBox(
                               width: 60,
-                              child: Divider(color: Colors.grey, thickness: 1.2),
+                              child: Divider(
+                                color: Colors.grey,
+                                thickness: 1.2,
+                              ),
                             ),
                             const Padding(
                               padding: EdgeInsets.symmetric(horizontal: 8.0),
@@ -246,7 +283,10 @@ class Loginscreen extends StatelessWidget {
                             ),
                             const SizedBox(
                               width: 60,
-                              child: Divider(color: Colors.grey, thickness: 1.2),
+                              child: Divider(
+                                color: Colors.grey,
+                                thickness: 1.2,
+                              ),
                             ),
                           ],
                         ),

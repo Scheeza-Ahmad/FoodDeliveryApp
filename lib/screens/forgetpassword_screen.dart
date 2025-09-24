@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:food/controller/eye_controller.dart';
 import 'package:food/screens/login_screen.dart';
+import 'package:food/utils/color_util.dart';
 import 'package:food/utils/string_util.dart';
 import 'package:food/widgets/button.dart';
 import 'package:food/widgets/input_password.dart';
 import 'package:food/widgets/input_field.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Forgetpassword extends StatelessWidget {
   const Forgetpassword({super.key});
@@ -26,11 +28,26 @@ class Forgetpassword extends StatelessWidget {
         int index = emails.indexOf(email);
         passwords[index] = newPassword;
         await pref.setStringList("passwords", passwords);
+        Fluttertoast.showToast(
+          msg: 'Password updated successfully!',
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colorutil.color,
 
-        Get.snackbar("Success", "Password updated successfully!");
-        Get.off(() => const Loginscreen()); 
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+        Get.off(() => const Loginscreen());
       } else {
-        Get.snackbar("Error", "No account found with this name.");
+        Fluttertoast.showToast(
+          msg: 'No account found with this name.',
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colorutil.color,
+
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
       }
     }
 
@@ -156,7 +173,15 @@ class Forgetpassword extends StatelessWidget {
                                 confirmPass.isNotEmpty) {
                               resetPassword(name, newPass);
                             } else {
-                              Get.snackbar("Error", "Please fill all fields");
+                              Fluttertoast.showToast(
+                                msg: 'Please fill all fields',
+                                gravity: ToastGravity.CENTER,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colorutil.color,
+
+                                textColor: Colors.white,
+                                fontSize: 16.0,
+                              );
                             }
                           },
                         ),

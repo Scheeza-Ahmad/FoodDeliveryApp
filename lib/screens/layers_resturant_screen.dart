@@ -8,6 +8,7 @@ import 'package:food/utils/color_util.dart';
 import 'package:food/utils/string_util.dart';
 import 'package:food/widgets/icon_btn.dart';
 import 'package:get/get.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LayersResturantScreen extends StatelessWidget {
   const LayersResturantScreen({super.key});
@@ -225,13 +226,15 @@ class LayersResturantScreen extends StatelessWidget {
                                         child: ElevatedButton(
                                           onPressed: () {
                                             cartController.addToCart(item);
-                                            Get.snackbar(
-                                              "Added to Cart",
-                                              "${item.name} added successfully",
-                                              snackPosition: SnackPosition.TOP,
-                                              backgroundColor: Colors.green
-                                                  .withOpacity(0.7),
-                                              colorText: Colors.white,
+                                            Fluttertoast.showToast(
+                                              msg:
+                                                  '${item.name} added successfully',
+                                              gravity: ToastGravity.CENTER,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor: Colorutil.color,
+
+                                              textColor: Colors.white,
+                                              fontSize: 16.0,
                                             );
                                           },
                                           style: ElevatedButton.styleFrom(
@@ -318,14 +321,14 @@ class LayersResturantScreen extends StatelessWidget {
                                 color: Colorutil.color,
                                 action: () {
                                   cartController.addToCart(item);
-                                  Get.snackbar(
-                                    "Added to Cart",
-                                    "${item.name} added successfully",
-                                    snackPosition: SnackPosition.TOP,
-                                    backgroundColor: Colors.green.withOpacity(
-                                      0.7,
-                                    ),
-                                    colorText: Colors.white,
+                                  Fluttertoast.showToast(
+                                    msg: '${item.name} added successfully',
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colorutil.color,
+
+                                    textColor: Colors.white,
+                                    fontSize: 16.0,
                                   );
                                 },
                                 icon: Icons.add,

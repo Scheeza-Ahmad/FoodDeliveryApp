@@ -8,6 +8,7 @@ import 'package:food/utils/string_util.dart';
 import 'package:food/widgets/icon_btn.dart';
 import 'package:food/widgets/resturant.dart';
 import 'package:get/get.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Homescreen extends StatelessWidget {
   Homescreen({super.key});
@@ -173,20 +174,19 @@ class Homescreen extends StatelessWidget {
                                 ],
                               ),
                               const SizedBox(height: 8),
-                              // Add to Cart Button
                               SizedBox(
                                 width: double.infinity,
                                 child: ElevatedButton(
                                   onPressed: () {
                                     cartController.addToCart(item);
-                                    Get.snackbar(
-                                      "Added to Cart",
-                                      "${item.name} added successfully",
-                                      snackPosition: SnackPosition.TOP,
-                                      backgroundColor: Colors.green.withOpacity(
-                                        0.7,
-                                      ),
-                                      colorText: Colors.white,
+                                    Fluttertoast.showToast(
+                                      msg: '${item.name} added successfully',
+                                      gravity: ToastGravity.CENTER,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colorutil.color,
+
+                                      textColor: Colors.white,
+                                      fontSize: 16.0,
                                     );
                                   },
                                   style: ElevatedButton.styleFrom(
@@ -231,7 +231,6 @@ class Homescreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 15),
 
-                // 🔥 Filtered Restaurants
                 Obx(() {
                   if (restaurantController.filteredRestaurants.isEmpty) {
                     return const Center(

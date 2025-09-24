@@ -10,6 +10,7 @@ import 'package:food/widgets/button.dart';
 import 'package:food/widgets/icon_btn.dart';
 import 'package:food/widgets/payment_option.dart';
 import 'package:get/get.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Payment extends StatelessWidget {
   const Payment({super.key});
@@ -106,10 +107,14 @@ class Payment extends StatelessWidget {
                   text: 'CONFIRM AND CONTINUE',
                   action: () {
                     if (!paymentController.hasSelection) {
-                      Get.snackbar(
-                        "Error",
-                        "Please select a payment option first",
-                        snackPosition: SnackPosition.TOP,
+                      Fluttertoast.showToast(
+                        msg: 'Please select a payment option first',
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colorutil.color,
+
+                        textColor: Colors.white,
+                        fontSize: 16.0,
                       );
                     } else {
                       cartController.clearCart();

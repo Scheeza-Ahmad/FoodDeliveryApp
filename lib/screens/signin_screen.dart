@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:food/controller/eye_controller.dart';
 import 'package:food/screens/login_screen.dart';
+import 'package:food/utils/color_util.dart';
 import 'package:food/utils/string_util.dart';
 import 'package:food/widgets/button.dart';
 import 'package:food/widgets/input_password.dart';
 import 'package:food/widgets/input_field.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Signin extends StatelessWidget {
   const Signin({super.key});
@@ -24,16 +26,31 @@ class Signin extends StatelessWidget {
       List<String> passwords = pref.getStringList("passwords") ?? [];
 
       if (emails.contains(email)) {
-        Get.snackbar('Error', 'You are already a user. Please Login');
+        Fluttertoast.showToast(
+          msg: 'You are already a user. Please Login',
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colorutil.color,
+
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
         Get.to(() => const Loginscreen());
       } else {
         emails.add(email);
         passwords.add(password);
         await pref.setStringList("emails", emails);
         await pref.setStringList("passwords", passwords);
+        Fluttertoast.showToast(
+          msg: 'Signup successful. Welcome!',
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colorutil.color,
 
-        Get.snackbar('Success', 'Signup successful. Welcome!');
-        Get.offAll(() =>  Loginscreen());
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+        Get.offAll(() => Loginscreen());
       }
     }
 
@@ -175,7 +192,15 @@ class Signin extends StatelessWidget {
                             if (email.isNotEmpty && password.isNotEmpty) {
                               signupUser(email, password);
                             } else {
-                              Get.snackbar("Error", "Please enter all fields");
+                              Fluttertoast.showToast(
+                                msg: 'Please enter all fields',
+                                gravity: ToastGravity.CENTER,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colorutil.color,
+
+                                textColor: Colors.white,
+                                fontSize: 16.0,
+                              );
                             }
                           },
                         ),
