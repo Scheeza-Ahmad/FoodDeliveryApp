@@ -86,25 +86,59 @@ class TraceRecordScreen extends StatelessWidget {
                       child: Obx(() {
                         return Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: List.generate(controller.stages.length, (
-                            i,
-                          ) {
+                          children: List.generate(controller.stages.length, (i) {
+                            bool isActive = i <= controller.activeStage.value;
+
                             return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 12.0,
-                              ),
+                              padding: const EdgeInsets.symmetric(horizontal: 12.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  CircularImage(
-                                    image: controller.stages[i],
-                                    isActive: i < controller.activeStage.value,
+                                  Stack(
+                                    alignment: Alignment.topRight,
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.all(4),
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                            color: isActive ? Colors.green : Colors.grey,
+                                            width: isActive ? 3 : 1,
+                                          ),
+                                        ),
+                                        child: CircularImage(
+                                          image: controller.stages[i],
+                                          isActive: isActive,
+                                        ),
+                                      ),
+                                      // 👇 Timer corner
+                                      if (isActive && i == controller.activeStage.value)
+                                        Positioned(
+                                          right: 0,
+                                          top: 0,
+                                          child: Obx(() => Container(
+                                                padding: const EdgeInsets.all(4),
+                                                decoration: const BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: Colors.red,
+                                                ),
+                                                child: Text(
+                                                  "${controller.countdown.value}",
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 10,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              )),
+                                        ),
+                                    ],
                                   ),
                                   const SizedBox(height: 10),
                                   Text(
                                     stageLabels[i],
-                                    style: const TextStyle(
-                                      color: Colors.black,
+                                    style: TextStyle(
+                                      color: isActive ? Colors.green.shade800 : Colors.black54,
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),

@@ -300,17 +300,47 @@ class Loginscreen extends StatelessWidget {
                             Iconbutton(
                               color: const Color(0xff395998),
                               image: AssetUtil.facebook,
-                              action: () {},
+                              action: () {
+                                Fluttertoast.showToast(
+                                  msg: 'Coming soon!',
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colorutil.color,
+
+                                  textColor: Colors.white,
+                                  fontSize: 16.0,
+                                );
+                              },
                             ),
                             Iconbutton(
                               color: const Color(0xff1CB7EB),
                               image: AssetUtil.twitter,
-                              action: () {},
+                              action: () {
+                                Fluttertoast.showToast(
+                                  msg: 'Coming soon!',
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colorutil.color,
+
+                                  textColor: Colors.white,
+                                  fontSize: 16.0,
+                                );
+                              },
                             ),
                             Iconbutton(
                               color: Colors.black,
                               image: AssetUtil.apple,
-                              action: () {},
+                              action: () {
+                                Fluttertoast.showToast(
+                                  msg: 'Coming soon!',
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colorutil.color,
+
+                                  textColor: Colors.white,
+                                  fontSize: 16.0,
+                                );
+                              },
                             ),
                           ],
                         ),

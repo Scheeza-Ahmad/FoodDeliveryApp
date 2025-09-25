@@ -3,12 +3,14 @@ import 'package:food/controller/cart_controller.dart';
 import 'package:food/controller/resturant_controller.dart';
 import 'package:food/models/homepage_card.dart';
 import 'package:food/screens/cart_screen.dart';
+import 'package:food/screens/login_screen.dart';
 import 'package:food/utils/color_util.dart';
 import 'package:food/utils/string_util.dart';
 import 'package:food/widgets/icon_btn.dart';
 import 'package:food/widgets/resturant.dart';
 import 'package:get/get.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Homescreen extends StatelessWidget {
   Homescreen({super.key});
@@ -16,6 +18,12 @@ class Homescreen extends StatelessWidget {
   final TextEditingController searchController = TextEditingController();
   final CartController cartController = Get.find();
   final RestaurantController restaurantController = Get.find();
+
+  Future<void> _logout() async {
+    final pref = await SharedPreferences.getInstance();
+    await pref.setBool("isLoggedIn", false); // 👈 logout status reset
+    Get.offAll(() => const Loginscreen()); // 👈 login page par bhej do
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +34,6 @@ class Homescreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(height: 15),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -51,17 +58,31 @@ class Homescreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Iconbtn(
-                      color: const Color(0xff181C2E),
-                      action: () {
-                        Get.to(() => const Cartscreen());
-                      },
-                      icon: Icons.trolley,
+                    Column(
+                      children: [
+                        IconButton(
+                          icon: const Icon(
+                            Icons.logout,
+                            color: Color(0xFFFF7622),
+                          ),
+                          tooltip: "Logout",
+                          onPressed: _logout,
+                        ),
+                        const SizedBox(height: 10),
+
+                        Iconbtn(
+                          color: const Color(0xff181C2E),
+                          action: () {
+                            Get.to(() => const Cartscreen());
+                          },
+                          icon: Icons.trolley,
+                        ),
+                      ],
                     ),
                   ],
                 ),
 
-                const SizedBox(height: 20),
+                // 🔹 Greeting
                 Row(
                   children: [
                     Text(
@@ -83,20 +104,24 @@ class Homescreen extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 20),
+
+                // 🔹 Search Bar
                 TextField(
                   onChanged: (value) {
                     restaurantController.searchQuery.value = value;
                   },
                   decoration: InputDecoration(
-                    hintText: "Search your favourite resturant",
-                    prefixIcon: Icon(Icons.search),
-
+                    hintText: "Search your favourite restaurant",
+                    prefixIcon: const Icon(Icons.search),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(18),
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 20),
+
+                // 🔹 Categories
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -112,6 +137,8 @@ class Homescreen extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 15),
+
+                // 🔹 Horizontal Product List
                 SizedBox(
                   height: 230,
                   child: ListView.builder(
@@ -184,7 +211,6 @@ class Homescreen extends StatelessWidget {
                                       gravity: ToastGravity.CENTER,
                                       timeInSecForIosWeb: 1,
                                       backgroundColor: Colorutil.color,
-
                                       textColor: Colors.white,
                                       fontSize: 16.0,
                                     );
@@ -215,7 +241,10 @@ class Homescreen extends StatelessWidget {
                     },
                   ),
                 ),
+
                 const SizedBox(height: 20),
+
+                // 🔹 Open Restaurants
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -229,8 +258,10 @@ class Homescreen extends StatelessWidget {
                     ),
                   ],
                 ),
+
                 const SizedBox(height: 15),
 
+                // 🔹 Restaurant List
                 Obx(() {
                   if (restaurantController.filteredRestaurants.isEmpty) {
                     return const Center(

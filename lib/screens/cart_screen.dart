@@ -47,7 +47,7 @@ class Cartscreen extends StatelessWidget {
                       ],
                     ),
                     InkWell(
-                      onTap: () => Get.to(() =>  Homescreen()),
+                      onTap: () => Get.offAll(() =>  Homescreen()),
                       child: const Text(
                         'Continue Shopping',
                         style: TextStyle(

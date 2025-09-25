@@ -52,12 +52,11 @@ class _InputfieldState extends State<Inputfield> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: _isFocused
-              ? const BorderSide(color: Colors.blue, width: 1.2) // Focused
-              : BorderSide.none, // Not focused
+              ? const BorderSide(color: Colors.blue, width: 1.2)
+              : BorderSide.none,
         ),
         hintText: widget.hint,
         hintStyle: TextStyle(color: Colors.grey.shade400),
-        labelStyle: const TextStyle(color: Colors.black),
         filled: true,
         fillColor: Colors.black.withOpacity(0.1),
         contentPadding: const EdgeInsets.symmetric(
@@ -65,10 +64,6 @@ class _InputfieldState extends State<Inputfield> {
           vertical: 16,
         ),
         suffixIcon: widget.option ? Icon(widget.icon) : null,
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.red, width: 1.2),
-        ),
       ),
     );
   }

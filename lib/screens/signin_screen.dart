@@ -20,9 +20,10 @@ class Signin extends StatelessWidget {
     final confirmpasswordcontroller = TextEditingController();
     final emailcontroller = TextEditingController();
     final EyeController controller = EyeController();
+
     Future<void> signupUser(String email, String password) async {
       final pref = await SharedPreferences.getInstance();
-      List<String> emails = pref.getStringList("email") ?? [];
+      List<String> emails = pref.getStringList("emails") ?? [];
       List<String> passwords = pref.getStringList("passwords") ?? [];
 
       if (emails.contains(email)) {
@@ -31,7 +32,6 @@ class Signin extends StatelessWidget {
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 1,
           backgroundColor: Colorutil.color,
-
           textColor: Colors.white,
           fontSize: 16.0,
         );
@@ -41,12 +41,12 @@ class Signin extends StatelessWidget {
         passwords.add(password);
         await pref.setStringList("emails", emails);
         await pref.setStringList("passwords", passwords);
+
         Fluttertoast.showToast(
           msg: 'Signup successful. Welcome!',
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 1,
           backgroundColor: Colorutil.color,
-
           textColor: Colors.white,
           fontSize: 16.0,
         );
@@ -117,14 +117,13 @@ class Signin extends StatelessWidget {
                             ),
                           ),
                         ),
-
                         Inputfield(
                           cont: namecontroller,
                           type: TextInputType.text,
                           hint: 'John Doe',
                           option: false,
                         ),
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
 
                         Align(
                           alignment: Alignment.centerLeft,
@@ -137,7 +136,6 @@ class Signin extends StatelessWidget {
                             ),
                           ),
                         ),
-
                         Inputfield(
                           cont: emailcontroller,
                           type: TextInputType.emailAddress,
@@ -163,7 +161,8 @@ class Signin extends StatelessWidget {
                           hint: 'Password',
                           controller: controller,
                         ),
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
+
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
@@ -181,26 +180,37 @@ class Signin extends StatelessWidget {
                           hint: 'Confirm Password',
                           controller: controller,
                         ),
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
 
                         Button(
-                          color: Color(0xFFFF7622),
+                          color: const Color(0xFFFF7622),
                           text: 'Sign Up',
                           action: () {
                             var email = emailcontroller.text.trim();
                             var password = passwordcontroller.text.trim();
-                            if (email.isNotEmpty && password.isNotEmpty) {
-                              signupUser(email, password);
-                            } else {
+                            var confirmPassword = confirmpasswordcontroller.text.trim();
+                            var name = namecontroller.text.trim();
+
+                            if (name.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
                               Fluttertoast.showToast(
                                 msg: 'Please enter all fields',
                                 gravity: ToastGravity.CENTER,
                                 timeInSecForIosWeb: 1,
                                 backgroundColor: Colorutil.color,
-
                                 textColor: Colors.white,
                                 fontSize: 16.0,
                               );
+                            } else if (password != confirmPassword) {
+                              Fluttertoast.showToast(
+                                msg: 'Passwords do not match',
+                                gravity: ToastGravity.CENTER,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.red,
+                                textColor: Colors.white,
+                                fontSize: 16.0,
+                              );
+                            } else {
+                              signupUser(email, password);
                             }
                           },
                         ),
