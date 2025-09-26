@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food/controller/eye_controller.dart';
+import 'package:food/models/user_model.dart';
 import 'package:food/screens/login_screen.dart';
 import 'package:food/utils/color_util.dart';
 import 'package:food/utils/string_util.dart';
@@ -21,16 +22,16 @@ class Signin extends StatelessWidget {
     final emailcontroller = TextEditingController();
     final EyeController controller = EyeController();
 
-    Future<void> signupUser(String email, String password) async {
+    Future<void> signupUser(String name, String email, String password) async {
       final pref = await SharedPreferences.getInstance();
       List<String> emails = pref.getStringList("emails") ?? [];
       List<String> passwords = pref.getStringList("passwords") ?? [];
+      List<String> names = pref.getStringList("names") ?? [];
 
       if (emails.contains(email)) {
         Fluttertoast.showToast(
           msg: 'You are already a user. Please Login',
           gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
           backgroundColor: Colorutil.color,
           textColor: Colors.white,
           fontSize: 16.0,
@@ -39,13 +40,18 @@ class Signin extends StatelessWidget {
       } else {
         emails.add(email);
         passwords.add(password);
+        names.add(name);
+
         await pref.setStringList("emails", emails);
         await pref.setStringList("passwords", passwords);
+        await pref.setStringList("names", names);
+
+        // ✅ Save user globally
+        UserModel.user = UserModel(name: name, email: email);
 
         Fluttertoast.showToast(
           msg: 'Signup successful. Welcome!',
           gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
           backgroundColor: Colorutil.color,
           textColor: Colors.white,
           fontSize: 16.0,
@@ -91,6 +97,7 @@ class Signin extends StatelessWidget {
                 ),
               ),
 
+              // Form
               Positioned(
                 bottom: 0,
                 left: 0,
@@ -204,7 +211,6 @@ class Signin extends StatelessWidget {
                                 Fluttertoast.showToast(
                                   msg: 'Please enter all fields',
                                   gravity: ToastGravity.CENTER,
-                                  timeInSecForIosWeb: 1,
                                   backgroundColor: Colorutil.color,
                                   textColor: Colors.white,
                                   fontSize: 16.0,
@@ -213,13 +219,12 @@ class Signin extends StatelessWidget {
                                 Fluttertoast.showToast(
                                   msg: 'Passwords do not match',
                                   gravity: ToastGravity.CENTER,
-                                  timeInSecForIosWeb: 1,
                                   backgroundColor: Colors.red,
                                   textColor: Colors.white,
                                   fontSize: 16.0,
                                 );
                               } else {
-                                signupUser(email, password);
+                                signupUser(name, email, password);
                               }
                             },
                           ),

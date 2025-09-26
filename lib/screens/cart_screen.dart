@@ -23,6 +23,7 @@ class Cartscreen extends StatelessWidget {
         },
 
         child: Scaffold(
+          backgroundColor: Colors.white,
           body: Container(
             color: const Color(0xff121223),
             child: Padding(

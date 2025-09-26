@@ -4,6 +4,7 @@ import 'package:food/utils/asset_util.dart';
 import 'package:food/utils/color_util.dart';
 import 'package:food/widgets/screen_container.dart';
 import 'package:get/get.dart';
+
 class Thirdscreen extends StatelessWidget {
   const Thirdscreen({super.key});
 
@@ -23,7 +24,7 @@ class Thirdscreen extends StatelessWidget {
                     'Get all your loved foods in one place.You just place the order we do the rest',
                 btntext: 'Next',
                 action: () {
-                  Get.offAll(()=>Fourthscreen());
+                  Get.offAll(() => Fourthscreen());
                 },
                 color: Colorutil.color,
                 secondbtn: Colors.grey.shade600,

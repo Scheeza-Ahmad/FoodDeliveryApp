@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food/controller/eye_controller.dart';
 import 'package:food/controller/tick_controller.dart';
+import 'package:food/models/user_model.dart';
 import 'package:food/screens/forgetpassword_screen.dart';
 import 'package:food/screens/home_screen.dart';
 import 'package:food/screens/signin_screen.dart';
@@ -29,18 +30,21 @@ class Loginscreen extends StatelessWidget {
       final pref = await SharedPreferences.getInstance();
       List<String> emails = pref.getStringList("emails") ?? [];
       List<String> passwords = pref.getStringList("passwords") ?? [];
+      List<String> names = pref.getStringList("names") ?? [];
 
       if (emails.contains(email)) {
         int index = emails.indexOf(email);
         if (passwords[index] == password) {
-          // ✅ Save login status
           await pref.setBool("isLoggedIn", true);
+
+          // ✅ Set global user
+          String name = names[index];
+          UserModel.user = UserModel(name: name, email: email);
+
           Fluttertoast.showToast(
             msg: 'Login successful!',
             gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
             backgroundColor: Colorutil.color,
-
             textColor: Colors.white,
             fontSize: 16.0,
           );
@@ -49,9 +53,7 @@ class Loginscreen extends StatelessWidget {
           Fluttertoast.showToast(
             msg: 'Wrong password!',
             gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
             backgroundColor: Colorutil.color,
-
             textColor: Colors.white,
             fontSize: 16.0,
           );
@@ -60,9 +62,7 @@ class Loginscreen extends StatelessWidget {
         Fluttertoast.showToast(
           msg: 'No account found. Please signup first.',
           gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
           backgroundColor: Colorutil.color,
-
           textColor: Colors.white,
           fontSize: 16.0,
         );
@@ -81,7 +81,7 @@ class Loginscreen extends StatelessWidget {
             children: [
               Container(color: const Color(0xFF121223)),
 
-              // 🔹 Heading
+              // Heading
               Positioned(
                 bottom: 470,
                 left: 0,
@@ -108,7 +108,7 @@ class Loginscreen extends StatelessWidget {
                 ),
               ),
 
-              // 🔹 Form Area
+              // Form
               Positioned(
                 bottom: 0,
                 left: 0,
@@ -128,7 +128,6 @@ class Loginscreen extends StatelessWidget {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          // Email field
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
@@ -148,7 +147,6 @@ class Loginscreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 27),
 
-                          // Password field
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
@@ -168,7 +166,7 @@ class Loginscreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 12),
 
-                          // Remember Me + Forget Password
+                          // Remember me + forget password
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -213,7 +211,7 @@ class Loginscreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 17),
 
-                          // Login Button
+                          // Login button
                           Button(
                             color: const Color(0xFFFF7622),
                             text: 'LOGIN',
@@ -226,9 +224,7 @@ class Loginscreen extends StatelessWidget {
                                 Fluttertoast.showToast(
                                   msg: 'Please enter all fields',
                                   gravity: ToastGravity.CENTER,
-                                  timeInSecForIosWeb: 1,
                                   backgroundColor: Colorutil.color,
-
                                   textColor: Colors.white,
                                   fontSize: 16.0,
                                 );
@@ -264,7 +260,7 @@ class Loginscreen extends StatelessWidget {
 
                           const SizedBox(height: 16),
 
-                          // Divider OR
+                          // Divider
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -294,10 +290,9 @@ class Loginscreen extends StatelessWidget {
                               ),
                             ],
                           ),
-
                           const SizedBox(height: 16),
 
-                          // Social login buttons
+                          // Social login
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
@@ -308,9 +303,7 @@ class Loginscreen extends StatelessWidget {
                                   Fluttertoast.showToast(
                                     msg: 'Coming soon!',
                                     gravity: ToastGravity.CENTER,
-                                    timeInSecForIosWeb: 1,
                                     backgroundColor: Colorutil.color,
-
                                     textColor: Colors.white,
                                     fontSize: 16.0,
                                   );
@@ -323,9 +316,7 @@ class Loginscreen extends StatelessWidget {
                                   Fluttertoast.showToast(
                                     msg: 'Coming soon!',
                                     gravity: ToastGravity.CENTER,
-                                    timeInSecForIosWeb: 1,
                                     backgroundColor: Colorutil.color,
-
                                     textColor: Colors.white,
                                     fontSize: 16.0,
                                   );
@@ -338,9 +329,7 @@ class Loginscreen extends StatelessWidget {
                                   Fluttertoast.showToast(
                                     msg: 'Coming soon!',
                                     gravity: ToastGravity.CENTER,
-                                    timeInSecForIosWeb: 1,
                                     backgroundColor: Colorutil.color,
-
                                     textColor: Colors.white,
                                     fontSize: 16.0,
                                   );

@@ -22,6 +22,8 @@ class Payment extends StatelessWidget {
     final TraceRecordController traceController = Get.find();
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
+
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: SingleChildScrollView(

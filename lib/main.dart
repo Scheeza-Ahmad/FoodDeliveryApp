@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food/controller/button_controller.dart';
 import 'package:food/controller/cart_controller.dart';
 import 'package:food/controller/onboarding_controller.dart';
 import 'package:food/controller/payment_controller.dart';
@@ -20,7 +21,7 @@ void main() async {
   Get.put(RestaurantController());
   Get.put(TraceRecordController());
   Get.put(PaymentController());
-
+  Get.put(ButtonController());
   runApp(MyApp(isLoggedIn: isLoggedIn));
 }
 

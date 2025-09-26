@@ -25,6 +25,8 @@ class TraceRecordScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
+
         body: Column(
           children: [
             Padding(
@@ -86,11 +88,15 @@ class TraceRecordScreen extends StatelessWidget {
                       child: Obx(() {
                         return Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: List.generate(controller.stages.length, (i) {
+                          children: List.generate(controller.stages.length, (
+                            i,
+                          ) {
                             bool isActive = i <= controller.activeStage.value;
 
                             return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12.0,
+                              ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
@@ -102,7 +108,9 @@ class TraceRecordScreen extends StatelessWidget {
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
                                           border: Border.all(
-                                            color: isActive ? Colors.green : Colors.grey,
+                                            color: isActive
+                                                ? Colors.green
+                                                : Colors.grey,
                                             width: isActive ? 3 : 1,
                                           ),
                                         ),
@@ -112,25 +120,28 @@ class TraceRecordScreen extends StatelessWidget {
                                         ),
                                       ),
                                       // 👇 Timer corner
-                                      if (isActive && i == controller.activeStage.value)
+                                      if (isActive &&
+                                          i == controller.activeStage.value)
                                         Positioned(
                                           right: 0,
                                           top: 0,
-                                          child: Obx(() => Container(
-                                                padding: const EdgeInsets.all(4),
-                                                decoration: const BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: Colors.red,
+                                          child: Obx(
+                                            () => Container(
+                                              padding: const EdgeInsets.all(4),
+                                              decoration: const BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Colors.red,
+                                              ),
+                                              child: Text(
+                                                "${controller.countdown.value}",
+                                                style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.bold,
                                                 ),
-                                                child: Text(
-                                                  "${controller.countdown.value}",
-                                                  style: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 10,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              )),
+                                              ),
+                                            ),
+                                          ),
                                         ),
                                     ],
                                   ),
@@ -138,7 +149,9 @@ class TraceRecordScreen extends StatelessWidget {
                                   Text(
                                     stageLabels[i],
                                     style: TextStyle(
-                                      color: isActive ? Colors.green.shade800 : Colors.black54,
+                                      color: isActive
+                                          ? Colors.green.shade800
+                                          : Colors.black54,
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),

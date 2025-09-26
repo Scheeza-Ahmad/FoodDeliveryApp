@@ -4,6 +4,7 @@ import 'package:food/controller/resturant_controller.dart';
 import 'package:food/models/homepage_card.dart';
 import 'package:food/screens/cart_screen.dart';
 import 'package:food/screens/login_screen.dart';
+import 'package:food/screens/profile_screen.dart';
 import 'package:food/utils/color_util.dart';
 import 'package:food/utils/string_util.dart';
 import 'package:food/widgets/icon_btn.dart';
@@ -33,27 +34,31 @@ class Homescreen extends StatelessWidget {
           FocusScope.of(context).unfocus();
         },
         child: Scaffold(
+          backgroundColor: Colors.white,
+
           body: Padding(
             padding: const EdgeInsets.all(20.0),
             child: SingleChildScrollView(
               child: Column(
                 children: [
+                  // 🔹 Top Row
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      // Left side (Deliver To)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'DELIVER TO',
+                            'Welcome to Foodies Hub 🍴',
                             style: TextStyle(
                               color: Colorutil.color,
-                              fontSize: Stringutil.content,
+                              fontSize: Stringutil.mainsize,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
-                            'Halal Lab office',
+                            'Discover delicious meals near you 😋',
                             style: TextStyle(
                               color: Colors.grey[700],
                               fontSize: Stringutil.content,
@@ -62,18 +67,62 @@ class Homescreen extends StatelessWidget {
                           ),
                         ],
                       ),
+
                       Column(
                         children: [
-                          IconButton(
-                            icon: const Icon(
-                              Icons.logout,
-                              color: Color(0xFFFF7622),
+                          PopupMenuButton<int>(
+                            icon: const Icon(Icons.person, size: 32),
+                            onSelected: (value) {
+                              if (value == 1) {
+                                Get.to(() => ProfileScreen());
+                              } else if (value == 2) {
+                                _logout();
+                              }
+                            },
+                            itemBuilder: (context) => [
+                              const PopupMenuItem(
+                                value: 1,
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.person, color: Colors.black),
+                                    SizedBox(width: 8),
+                                    Text(
+                                      "Profile",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const PopupMenuItem(
+                                value: 2,
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.logout, color: Colors.red),
+                                    SizedBox(width: 8),
+                                    Text(
+                                      "Logout",
+
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                            offset: const Offset(-48, 12), // left dropdown
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
                             ),
-                            tooltip: "Logout",
-                            onPressed: _logout,
                           ),
+
                           const SizedBox(height: 10),
 
+                          // Cart button
                           Iconbtn(
                             color: const Color(0xff181C2E),
                             action: () {
@@ -86,18 +135,10 @@ class Homescreen extends StatelessWidget {
                     ],
                   ),
 
-                  // 🔹 Greeting
                   Row(
                     children: [
                       Text(
-                        'Hey Halal, ',
-                        style: TextStyle(
-                          color: Colors.grey[700],
-                          fontSize: Stringutil.mainsize,
-                        ),
-                      ),
-                      Text(
-                        'Good Afternoon!',
+                        'Pick Your Craving 🍴',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: Stringutil.mainsize,

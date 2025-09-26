@@ -27,6 +27,8 @@ class PancakeHouseScreen extends StatelessWidget {
           FocusScope.of(context).unfocus();
         },
         child: Scaffold(
+          backgroundColor: Colors.white,
+
           body: Column(
             children: [
               Padding(
