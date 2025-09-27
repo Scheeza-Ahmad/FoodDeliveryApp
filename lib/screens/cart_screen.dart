@@ -9,19 +9,16 @@ import 'package:food/widgets/input_field.dart';
 import 'package:get/get.dart';
 
 class Cartscreen extends StatelessWidget {
-  const Cartscreen({super.key});
+  Cartscreen({super.key});
+
+  final TextEditingController addressController = TextEditingController();
+  final CartController cartController = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController addressController = TextEditingController();
-    final CartController cartController = Get.find();
-
     return SafeArea(
       child: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-
+        onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
           backgroundColor: Colors.white,
           body: Container(
@@ -139,6 +136,7 @@ class Cartscreen extends StatelessWidget {
             ),
           ),
 
+          // 👇 Bottom Section
           bottomNavigationBar: SingleChildScrollView(
             child: Container(
               padding: const EdgeInsets.fromLTRB(18, 14, 18, 14),
@@ -195,32 +193,20 @@ class Cartscreen extends StatelessWidget {
                     action: () {
                       if (cartController.cartItems.isEmpty) {
                         Get.dialog(
-                          AlertDialog(
-                            title: const Text("Cart is Empty"),
-                            content: const Text(
+                          const AlertDialog(
+                            title: Text("Cart is Empty"),
+                            content: Text(
                               "Please add some items before placing the order.",
                             ),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Get.back(),
-                                child: const Text("OK"),
-                              ),
-                            ],
                           ),
                         );
                       } else if (addressController.text.trim().isEmpty) {
                         Get.dialog(
-                          AlertDialog(
-                            title: const Text("Address Required"),
-                            content: const Text(
+                          const AlertDialog(
+                            title: Text("Address Required"),
+                            content: Text(
                               "Please enter your delivery address before placing the order.",
                             ),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Get.back(),
-                                child: const Text("OK"),
-                              ),
-                            ],
                           ),
                         );
                       } else {

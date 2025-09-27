@@ -20,10 +20,22 @@ class Homescreen extends StatelessWidget {
   final CartController cartController = Get.find();
   final RestaurantController restaurantController = Get.find();
 
-  Future<void> _logout() async {
+  Future<void> logoutUser() async {
     final pref = await SharedPreferences.getInstance();
-    await pref.setBool("isLoggedIn", false); // 👈 logout status reset
-    Get.offAll(() => const Loginscreen()); // 👈 login page par bhej do
+
+    // session clear karna
+    await pref.setBool("isLoggedIn", false);
+
+    Fluttertoast.showToast(
+      msg: 'You have been logged out!',
+      gravity: ToastGravity.CENTER,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+
+    // Login screen par bhejna
+    Get.offAll(() => Loginscreen());
   }
 
   @override
@@ -76,7 +88,7 @@ class Homescreen extends StatelessWidget {
                               if (value == 1) {
                                 Get.to(() => ProfileScreen());
                               } else if (value == 2) {
-                                _logout();
+                                logoutUser();
                               }
                             },
                             itemBuilder: (context) => [
@@ -126,7 +138,7 @@ class Homescreen extends StatelessWidget {
                           Iconbtn(
                             color: const Color(0xff181C2E),
                             action: () {
-                              Get.to(() => const Cartscreen());
+                              Get.to(() => Cartscreen());
                             },
                             icon: Icons.trolley,
                           ),

@@ -52,7 +52,7 @@ class OnboardingScreen extends StatelessWidget {
           if (isLoggedIn) {
             Get.offAll(() => Homescreen()); // ✅ Direct home agar login hai
           } else {
-            Get.offAll(() => const Loginscreen()); // ✅ else login page
+            Get.offAll(() =>  Loginscreen()); // ✅ else login page
           }
         },
         color: Colorutil.color,

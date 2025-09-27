@@ -12,65 +12,60 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class Signin extends StatelessWidget {
-  const Signin({super.key});
+  Signin({super.key});
+
+  final namecontroller = TextEditingController();
+  final passwordcontroller = TextEditingController();
+  final confirmpasswordcontroller = TextEditingController();
+  final emailcontroller = TextEditingController();
+  final EyeController controller = EyeController();
+
+  Future<void> signupUser(String name, String email, String password) async {
+    final pref = await SharedPreferences.getInstance();
+
+    // Agar pehle se user exist karta hai
+    String? savedPassword = pref.getString("user_${email}_password");
+
+    if (savedPassword != null) {
+      Fluttertoast.showToast(
+        msg: 'You are already a user. Please Login',
+        gravity: ToastGravity.CENTER,
+        backgroundColor: Colorutil.color,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      Get.to(() => Loginscreen());
+    } else {
+      // Naya user save karo
+      await pref.setString("user_${email}_password", password);
+      await pref.setString("user_${email}_name", name);
+
+      UserModel.user = UserModel(name: name, email: email);
+
+      Fluttertoast.showToast(
+        msg: 'Signup successful. Welcome!',
+        gravity: ToastGravity.CENTER,
+        backgroundColor: Colorutil.color,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+
+      Get.offAll(() => Loginscreen());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final namecontroller = TextEditingController();
-    final passwordcontroller = TextEditingController();
-    final confirmpasswordcontroller = TextEditingController();
-    final emailcontroller = TextEditingController();
-    final EyeController controller = EyeController();
-
-    Future<void> signupUser(String name, String email, String password) async {
-      final pref = await SharedPreferences.getInstance();
-      List<String> emails = pref.getStringList("emails") ?? [];
-      List<String> passwords = pref.getStringList("passwords") ?? [];
-      List<String> names = pref.getStringList("names") ?? [];
-
-      if (emails.contains(email)) {
-        Fluttertoast.showToast(
-          msg: 'You are already a user. Please Login',
-          gravity: ToastGravity.CENTER,
-          backgroundColor: Colorutil.color,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
-        Get.to(() => const Loginscreen());
-      } else {
-        emails.add(email);
-        passwords.add(password);
-        names.add(name);
-
-        await pref.setStringList("emails", emails);
-        await pref.setStringList("passwords", passwords);
-        await pref.setStringList("names", names);
-
-        // ✅ Save user globally
-        UserModel.user = UserModel(name: name, email: email);
-
-        Fluttertoast.showToast(
-          msg: 'Signup successful. Welcome!',
-          gravity: ToastGravity.CENTER,
-          backgroundColor: Colorutil.color,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
-        Get.offAll(() => Loginscreen());
-      }
-    }
-
     return SafeArea(
       child: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
+        onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
           backgroundColor: Colors.black,
           body: Stack(
             children: [
               Container(color: const Color(0xFF121223)),
 
+              // Heading
               Positioned(
                 bottom: 470,
                 left: 0,
@@ -119,14 +114,12 @@ class Signin extends StatelessWidget {
                         children: [
                           Align(
                             alignment: Alignment.centerLeft,
-                            child: Text(
-                              'Name',
-                              style: TextStyle(
-                                fontSize: Stringutil.mainsize,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
+                            child: Text('Name',
+                                style: TextStyle(
+                                  fontSize: Stringutil.mainsize,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400,
+                                )),
                           ),
                           Inputfield(
                             cont: namecontroller,
@@ -138,14 +131,12 @@ class Signin extends StatelessWidget {
 
                           Align(
                             alignment: Alignment.centerLeft,
-                            child: Text(
-                              'Email',
-                              style: TextStyle(
-                                fontSize: Stringutil.mainsize,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
+                            child: Text('Email',
+                                style: TextStyle(
+                                  fontSize: Stringutil.mainsize,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400,
+                                )),
                           ),
                           Inputfield(
                             cont: emailcontroller,
@@ -153,18 +144,16 @@ class Signin extends StatelessWidget {
                             hint: 'example@gmail.com',
                             option: false,
                           ),
-
                           const SizedBox(height: 16),
+
                           Align(
                             alignment: Alignment.centerLeft,
-                            child: Text(
-                              'Password',
-                              style: TextStyle(
-                                fontSize: Stringutil.mainsize,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
+                            child: Text('Password',
+                                style: TextStyle(
+                                  fontSize: Stringutil.mainsize,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400,
+                                )),
                           ),
                           InputPassword(
                             cont: passwordcontroller,
@@ -176,14 +165,12 @@ class Signin extends StatelessWidget {
 
                           Align(
                             alignment: Alignment.centerLeft,
-                            child: Text(
-                              'Re-type Password',
-                              style: TextStyle(
-                                fontSize: Stringutil.mainsize,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
+                            child: Text('Re-type Password',
+                                style: TextStyle(
+                                  fontSize: Stringutil.mainsize,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400,
+                                )),
                           ),
                           InputPassword(
                             cont: confirmpasswordcontroller,
@@ -199,9 +186,8 @@ class Signin extends StatelessWidget {
                             action: () {
                               var email = emailcontroller.text.trim();
                               var password = passwordcontroller.text.trim();
-                              var confirmPassword = confirmpasswordcontroller
-                                  .text
-                                  .trim();
+                              var confirmPassword =
+                                  confirmpasswordcontroller.text.trim();
                               var name = namecontroller.text.trim();
 
                               if (name.isEmpty ||

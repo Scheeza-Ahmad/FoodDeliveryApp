@@ -14,7 +14,7 @@ class ProfileCard extends StatelessWidget {
   Future<void> _logout() async {
     final pref = await SharedPreferences.getInstance();
     await pref.setBool("isLoggedIn", false); // 👈 logout status reset
-    Get.offAll(() => const Loginscreen()); // 👈 login page par bhej do
+    Get.offAll(() =>  Loginscreen()); // 👈 login page par bhej do
   }
 
   @override

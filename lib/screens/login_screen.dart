@@ -17,64 +17,56 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class Loginscreen extends StatelessWidget {
-  const Loginscreen({super.key});
+  Loginscreen({super.key});
+
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final EyeController controller = EyeController();
+  final TickController tickController = TickController();
+
+  Future<void> loginUser(String email, String password) async {
+    final pref = await SharedPreferences.getInstance();
+    String? savedPassword = pref.getString("user_${email}_password");
+    String? savedName = pref.getString("user_${email}_name");
+
+    if (savedPassword == null) {
+      Fluttertoast.showToast(
+        msg: 'No account found. Please signup first.',
+        gravity: ToastGravity.CENTER,
+        backgroundColor: Colorutil.color,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      Get.to(() => Signin());
+    } else if (savedPassword == password) {
+      await pref.setBool("isLoggedIn", true);
+
+      UserModel.user = UserModel(name: savedName ?? "", email: email);
+
+      Fluttertoast.showToast(
+        msg: 'Login successful!',
+        gravity: ToastGravity.CENTER,
+        backgroundColor: Colorutil.color,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      Get.to(() => Homescreen());
+    } else {
+      Fluttertoast.showToast(
+        msg: 'Wrong password!',
+        gravity: ToastGravity.CENTER,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
-    final EyeController controller = EyeController();
-    final TickController tickController = TickController();
-
-    Future<void> loginUser(String email, String password) async {
-      final pref = await SharedPreferences.getInstance();
-      List<String> emails = pref.getStringList("emails") ?? [];
-      List<String> passwords = pref.getStringList("passwords") ?? [];
-      List<String> names = pref.getStringList("names") ?? [];
-
-      if (emails.contains(email)) {
-        int index = emails.indexOf(email);
-        if (passwords[index] == password) {
-          await pref.setBool("isLoggedIn", true);
-
-          // ✅ Set global user
-          String name = names[index];
-          UserModel.user = UserModel(name: name, email: email);
-
-          Fluttertoast.showToast(
-            msg: 'Login successful!',
-            gravity: ToastGravity.CENTER,
-            backgroundColor: Colorutil.color,
-            textColor: Colors.white,
-            fontSize: 16.0,
-          );
-          Get.offAll(() => Homescreen());
-        } else {
-          Fluttertoast.showToast(
-            msg: 'Wrong password!',
-            gravity: ToastGravity.CENTER,
-            backgroundColor: Colorutil.color,
-            textColor: Colors.white,
-            fontSize: 16.0,
-          );
-        }
-      } else {
-        Fluttertoast.showToast(
-          msg: 'No account found. Please signup first.',
-          gravity: ToastGravity.CENTER,
-          backgroundColor: Colorutil.color,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
-        Get.to(() => const Signin());
-      }
-    }
-
     return SafeArea(
       child: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
+        onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
           backgroundColor: Colors.black,
           body: Stack(
@@ -180,8 +172,7 @@ class Loginscreen extends StatelessWidget {
                                       icon: Icon(
                                         tickController.tick.value
                                             ? Icons.check_box
-                                            : Icons
-                                                  .check_box_outline_blank_outlined,
+                                            : Icons.check_box_outline_blank_outlined,
                                       ),
                                     ),
                                   ),
@@ -245,7 +236,7 @@ class Loginscreen extends StatelessWidget {
                               ),
                               InkWell(
                                 onTap: () {
-                                  Get.to(() => const Signin());
+                                  Get.to(() => Signin());
                                 },
                                 child: const Text(
                                   'SIGN UP',
@@ -292,7 +283,7 @@ class Loginscreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 16),
 
-                          // Social login
+                          // Social login (dummy)
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
@@ -300,39 +291,21 @@ class Loginscreen extends StatelessWidget {
                                 color: const Color(0xff395998),
                                 image: AssetUtil.facebook,
                                 action: () {
-                                  Fluttertoast.showToast(
-                                    msg: 'Coming soon!',
-                                    gravity: ToastGravity.CENTER,
-                                    backgroundColor: Colorutil.color,
-                                    textColor: Colors.white,
-                                    fontSize: 16.0,
-                                  );
+                                  Fluttertoast.showToast(msg: 'Coming soon!');
                                 },
                               ),
                               Iconbutton(
                                 color: const Color(0xff1CB7EB),
                                 image: AssetUtil.twitter,
                                 action: () {
-                                  Fluttertoast.showToast(
-                                    msg: 'Coming soon!',
-                                    gravity: ToastGravity.CENTER,
-                                    backgroundColor: Colorutil.color,
-                                    textColor: Colors.white,
-                                    fontSize: 16.0,
-                                  );
+                                  Fluttertoast.showToast(msg: 'Coming soon!');
                                 },
                               ),
                               Iconbutton(
                                 color: Colors.black,
                                 image: AssetUtil.apple,
                                 action: () {
-                                  Fluttertoast.showToast(
-                                    msg: 'Coming soon!',
-                                    gravity: ToastGravity.CENTER,
-                                    backgroundColor: Colorutil.color,
-                                    textColor: Colors.white,
-                                    fontSize: 16.0,
-                                  );
+                                  Fluttertoast.showToast(msg: 'Coming soon!');
                                 },
                               ),
                             ],

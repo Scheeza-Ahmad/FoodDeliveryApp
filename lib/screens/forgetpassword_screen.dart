@@ -11,14 +11,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class Forgetpassword extends StatelessWidget {
-  const Forgetpassword({super.key});
+   Forgetpassword({super.key});
 
   @override
-  Widget build(BuildContext context) {
     final namecontroller = TextEditingController();
     final passwordcontroller = TextEditingController();
     final confirmpasswordcontroller = TextEditingController();
     final EyeController controler = EyeController();
+  Widget build(BuildContext context) {
     Future<void> resetPassword(String email, String newPassword) async {
       final pref = await SharedPreferences.getInstance();
       List<String> emails = pref.getStringList("emails") ?? [];
@@ -37,7 +37,7 @@ class Forgetpassword extends StatelessWidget {
           textColor: Colors.white,
           fontSize: 16.0,
         );
-        Get.off(() => const Loginscreen());
+        Get.off(() =>  Loginscreen());
       } else {
         Fluttertoast.showToast(
           msg: 'No account found with this name.',
