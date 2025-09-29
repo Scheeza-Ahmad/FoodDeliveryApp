@@ -10,7 +10,6 @@ class ScreenContainer extends StatelessWidget {
   final Color secondbtn;
   final VoidCallback action;
   final String secondbtntext;
-
   const ScreenContainer({
     super.key,
     required this.image,
@@ -27,47 +26,21 @@ class ScreenContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // 🔹 Image with proper fit (blue line hatane ke liye)
-        ClipRRect(
-          borderRadius: BorderRadius.circular(12),
-          child: Image.asset(
-            image,
-            height: 300,
-            width: double.infinity,
-            fit: BoxFit.cover, // pura cover karega
-          ),
-        ),
-
-        const SizedBox(height: 20),
-
-        // 🔹 Heading
+        Image.asset(image, height: 300),
+        SizedBox(height: 20),
         Text(
           heading,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
+          style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
             fontSize: 24,
           ),
         ),
-
-        const SizedBox(height: 12),
-
-        // 🔹 Subtext
-        Text(
-          text,
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.grey[600], fontSize: 14, height: 1.4),
-        ),
-
-        const SizedBox(height: 20),
-
-        // 🔹 Primary Button
+        SizedBox(height: 12),
+        Text(text, style: TextStyle(color: Colors.grey[600], fontSize: 14)),
+        SizedBox(height: 12),
         Button(color: color, text: btntext, action: action, height: 60),
-
-        const SizedBox(height: 12),
-
-        // 🔹 Secondary Button
+        SizedBox(height: 8),
         Button(
           color: secondbtn,
           text: secondbtntext,

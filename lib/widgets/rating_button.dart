@@ -27,6 +27,7 @@ class RatingDialog extends StatelessWidget {
     final dialog = Center(
       child: rating_dialog.RatingDialog(
         initialRating: 1.0,
+        starSize: 28,
         title: Text(
           'Rating Dialog',
           textAlign: TextAlign.center,
