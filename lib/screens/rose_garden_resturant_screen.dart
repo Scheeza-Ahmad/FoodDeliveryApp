@@ -29,6 +29,7 @@ class RoseGardenResturantScreen extends StatelessWidget {
         },
         child: Scaffold(
           backgroundColor: Colors.white,
+          resizeToAvoidBottomInset: true, // 👈 important
 
           body: Column(
             children: [

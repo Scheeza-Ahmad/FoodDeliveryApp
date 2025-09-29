@@ -20,6 +20,7 @@ class Cartscreen extends StatelessWidget {
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
+          resizeToAvoidBottomInset: true, // 👈 important
           backgroundColor: Colors.white,
           body: Container(
             color: const Color(0xff121223),
@@ -138,84 +139,90 @@ class Cartscreen extends StatelessWidget {
 
           // 👇 Bottom Section
           bottomNavigationBar: SingleChildScrollView(
-            child: Container(
-              padding: const EdgeInsets.fromLTRB(18, 14, 18, 14),
-              height: 260,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                ),
-                color: Colors.white,
+            reverse: true, // 👈 keyboard open hone pe upar scroll karega
+            child: Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom, // 👈 space adjust
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Delivery Address',
-                    style: TextStyle(fontSize: 17, color: Colors.grey.shade500),
+              child: Container(
+                padding: const EdgeInsets.fromLTRB(18, 14, 18, 14),
+                height: 260,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
                   ),
-                  const SizedBox(height: 15),
-                  Inputfield(
-                    cont: addressController,
-                    type: TextInputType.text,
-                    hint: '114, Allama Iqbal Town',
-                    option: false,
-                  ),
-                  const SizedBox(height: 30),
-                  Row(
-                    children: [
-                      const Text(
-                        'Price',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Obx(
-                        () => Text(
-                          "PKR ${cartController.totalPrice}",
+                  color: Colors.white,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Delivery Address',
+                      style: TextStyle(fontSize: 17, color: Colors.grey.shade500),
+                    ),
+                    const SizedBox(height: 15),
+                    Inputfield(
+                      cont: addressController,
+                      type: TextInputType.text,
+                      hint: '114, Allama Iqbal Town',
+                      option: false,
+                    ),
+                    const SizedBox(height: 30),
+                    Row(
+                      children: [
+                        const Text(
+                          'Price',
                           style: TextStyle(
-                            color: Colors.grey.shade500,
-                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
                             fontSize: 20,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Button(
-                    color: Colorutil.color,
-                    text: 'PLACE ORDER',
-                    action: () {
-                      if (cartController.cartItems.isEmpty) {
-                        Get.dialog(
-                          const AlertDialog(
-                            title: Text("Cart is Empty"),
-                            content: Text(
-                              "Please add some items before placing the order.",
+                        const SizedBox(width: 8),
+                        Obx(
+                          () => Text(
+                            "PKR ${cartController.totalPrice}",
+                            style: TextStyle(
+                              color: Colors.grey.shade500,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
                             ),
                           ),
-                        );
-                      } else if (addressController.text.trim().isEmpty) {
-                        Get.dialog(
-                          const AlertDialog(
-                            title: Text("Address Required"),
-                            content: Text(
-                              "Please enter your delivery address before placing the order.",
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Button(
+                      color: Colorutil.color,
+                      text: 'PLACE ORDER',
+                      action: () {
+                        if (cartController.cartItems.isEmpty) {
+                          Get.dialog(
+                            const AlertDialog(
+                              title: Text("Cart is Empty"),
+                              content: Text(
+                                "Please add some items before placing the order.",
+                              ),
                             ),
-                          ),
-                        );
-                      } else {
-                        Get.off(() => const Payment());
-                      }
-                    },
-                    height: 50,
-                  ),
-                ],
+                          );
+                        } else if (addressController.text.trim().isEmpty) {
+                          Get.dialog(
+                            const AlertDialog(
+                              title: Text("Address Required"),
+                              content: Text(
+                                "Please enter your delivery address before placing the order.",
+                              ),
+                            ),
+                          );
+                        } else {
+                          Get.off(() => const Payment());
+                        }
+                      },
+                      height: 50,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

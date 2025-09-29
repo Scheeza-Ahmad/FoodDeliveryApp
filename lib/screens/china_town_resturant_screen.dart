@@ -26,6 +26,8 @@ class ChinaTownResturantScreen extends StatelessWidget {
           FocusScope.of(context).unfocus();
         },
         child: Scaffold(
+          resizeToAvoidBottomInset: true, // 👈 important
+
           backgroundColor: Colors.white,
           body: Column(
             children: [

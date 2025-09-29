@@ -47,7 +47,6 @@ class Homescreen extends StatelessWidget {
         },
         child: Scaffold(
           backgroundColor: Colors.white,
-
           body: Padding(
             padding: const EdgeInsets.all(20.0),
             child: SingleChildScrollView(
@@ -116,7 +115,6 @@ class Homescreen extends StatelessWidget {
                                     SizedBox(width: 8),
                                     Text(
                                       "Logout",
-
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.red,
@@ -131,7 +129,6 @@ class Homescreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-
                           const SizedBox(height: 10),
 
                           // Cart button
@@ -164,6 +161,7 @@ class Homescreen extends StatelessWidget {
 
                   // 🔹 Search Bar
                   TextField(
+                    controller: searchController,
                     onChanged: (value) {
                       restaurantController.searchQuery.value = value;
                     },
@@ -178,168 +176,195 @@ class Homescreen extends StatelessWidget {
 
                   const SizedBox(height: 20),
 
-                  // 🔹 Categories
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'All Categories',
-                        style: TextStyle(
-                          fontSize: Stringutil.mainsize,
-                          color: Colors.grey[700],
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 15),
-
-                  // 🔹 Horizontal Product List
-                  SizedBox(
-                    height: 230,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: HomepageCard.product.length,
-                      itemBuilder: (context, index) {
-                        HomepageCard item = HomepageCard.product[index];
-                        return Card(
-                          elevation: 4,
-                          margin: const EdgeInsets.symmetric(
-                            horizontal: 5,
-                            vertical: 8,
+                  // 🔹 Main Content / Search Results
+                  Obx(() {
+                    // agar search box empty hai
+                    if (restaurantController.searchQuery.value.isEmpty) {
+                      return Column(
+                        children: [
+                          // Categories Section
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'All Categories',
+                                style: TextStyle(
+                                  fontSize: Stringutil.mainsize,
+                                  color: Colors.grey[700],
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
                           ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Container(
-                            width: 160,
-                            padding: const EdgeInsets.all(12),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: Image.asset(
-                                    item.image,
-                                    height: 90,
-                                    width: double.infinity,
-                                    fit: BoxFit.cover,
+                          const SizedBox(height: 15),
+
+                          // 🔹 Horizontal Product List
+                          SizedBox(
+                            height: 230,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: HomepageCard.product.length,
+                              itemBuilder: (context, index) {
+                                HomepageCard item = HomepageCard.product[index];
+                                return Card(
+                                  elevation: 4,
+                                  margin: const EdgeInsets.symmetric(
+                                    horizontal: 5,
+                                    vertical: 8,
                                   ),
-                                ),
-                                const SizedBox(height: 10),
-                                Text(
-                                  item.name,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
                                   ),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Starting',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey[700],
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    Text(
-                                      item.price.toString(),
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey[700],
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 8),
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      cartController.addToCart(item);
-                                      Fluttertoast.showToast(
-                                        msg: '${item.name} added successfully',
-                                        gravity: ToastGravity.CENTER,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: Colorutil.color,
-                                        textColor: Colors.white,
-                                        fontSize: 16.0,
-                                      );
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.green,
-                                      foregroundColor: Colors.white,
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 8,
-                                      ),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                    ),
-                                    child: const Text(
-                                      'Add to Cart',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                  child: Container(
+                                    width: 160,
+                                    padding: const EdgeInsets.all(12),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          child: Image.asset(
+                                            item.image,
+                                            height: 90,
+                                            width: double.infinity,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 10),
+                                        Text(
+                                          item.name,
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              'Starting',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.grey[700],
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            Text(
+                                              item.price.toString(),
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.grey[700],
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 8),
+                                        SizedBox(
+                                          width: double.infinity,
+                                          child: ElevatedButton(
+                                            onPressed: () {
+                                              cartController.addToCart(item);
+                                              Fluttertoast.showToast(
+                                                msg:
+                                                    '${item.name} added successfully',
+                                                gravity: ToastGravity.CENTER,
+                                                timeInSecForIosWeb: 1,
+                                                backgroundColor:
+                                                    Colorutil.color,
+                                                textColor: Colors.white,
+                                                fontSize: 16.0,
+                                              );
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.green,
+                                              foregroundColor: Colors.white,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                vertical: 8,
+                                              ),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                            ),
+                                            child: const Text(
+                                              'Add to Cart',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                ),
-                              ],
+                                );
+                              },
                             ),
                           ),
+
+                          const SizedBox(height: 20),
+
+                          // 🔹 Open Restaurants
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Open Restaurants',
+                                style: TextStyle(
+                                  fontSize: Stringutil.mainsize,
+                                  color: Colors.grey[700],
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 15),
+
+                          // 🔹 Restaurant List
+                          ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: restaurantController
+                                .filteredRestaurants.length,
+                            itemBuilder: (context, index) {
+                              return Resturant(
+                                restu: restaurantController
+                                    .filteredRestaurants[index],
+                              );
+                            },
+                          ),
+                        ],
+                      );
+                    } else {
+                      // agar search kiya gaya hai to sirf filtered restaurants dikhayen
+                      if (restaurantController.filteredRestaurants.isEmpty) {
+                        return const Center(
+                          child: Text(
+                            "No restaurant found",
+                            style:
+                                TextStyle(color: Colors.grey, fontSize: 16),
+                          ),
                         );
-                      },
-                    ),
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  // 🔹 Open Restaurants
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Open Restaurants',
-                        style: TextStyle(
-                          fontSize: Stringutil.mainsize,
-                          color: Colors.grey[700],
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 15),
-
-                  // 🔹 Restaurant List
-                  Obx(() {
-                    if (restaurantController.filteredRestaurants.isEmpty) {
-                      return const Center(
-                        child: Text(
-                          "No restaurant found",
-                          style: TextStyle(color: Colors.grey, fontSize: 16),
-                        ),
+                      }
+                      return ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount:
+                            restaurantController.filteredRestaurants.length,
+                        itemBuilder: (context, index) {
+                          return Resturant(
+                            restu: restaurantController
+                                .filteredRestaurants[index],
+                          );
+                        },
                       );
                     }
-                    return ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount:
-                          restaurantController.filteredRestaurants.length,
-                      itemBuilder: (context, index) {
-                        return Resturant(
-                          restu:
-                              restaurantController.filteredRestaurants[index],
-                        );
-                      },
-                    );
                   }),
                 ],
               ),

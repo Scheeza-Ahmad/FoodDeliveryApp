@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food/models/user_model.dart';
 import 'package:food/screens/login_screen.dart';
-import 'package:food/screens/signin_screen.dart';
 import 'package:food/utils/color_util.dart';
 import 'package:food/widgets/button.dart';
 import 'package:food/widgets/profile_photo.dart';
@@ -14,7 +13,7 @@ class ProfileCard extends StatelessWidget {
   Future<void> _logout() async {
     final pref = await SharedPreferences.getInstance();
     await pref.setBool("isLoggedIn", false); // 👈 logout status reset
-    Get.offAll(() =>  Loginscreen()); // 👈 login page par bhej do
+    Get.offAll(() => Loginscreen()); // 👈 login page par bhej do
   }
 
   @override
@@ -86,7 +85,7 @@ class ProfileCard extends StatelessWidget {
               color: Colorutil.color,
               text: 'Use Different Account',
               action: () {
-                Get.offAll(() => Signin());
+                Get.offAll(() => Loginscreen());
               },
             ),
           ],

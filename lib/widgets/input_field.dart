@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 class Inputfield extends StatefulWidget {
-  
-
   final TextEditingController cont;
   final TextInputType type;
   final String hint;
