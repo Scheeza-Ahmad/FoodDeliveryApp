@@ -20,93 +20,98 @@ class ContinentalBitesResturant extends StatelessWidget {
       ResturantMenuController(ContinentalBitesPopularModel.popular),
       tag: "continental_bites",
     );
+
     return SafeArea(
       child: GestureDetector(
         onTap: () {
-          FocusScope.of(context).unfocus();
+          FocusScope.of(context).unfocus(); // 👈 keyboard dismiss on tap
         },
         child: Scaffold(
           backgroundColor: Colors.white,
           resizeToAvoidBottomInset: true, // 👈 important
 
-          body: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Iconbtn(
-                          color: Colors.grey.shade700,
-                          action: () {
-                            Get.back();
-                          },
-                          icon: Icons.arrow_back,
-                        ),
-                        Iconbtn(
-                          color: Colors.grey.shade700,
-                          action: () {
-                            Get.to(() => Cartscreen());
-                          },
-                          icon: Icons.trolley,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 14),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Image.asset(
-                        AssetUtil.continental,
-                        height: 200,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      'Continental Bites Resturant',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: Stringutil.headingsize,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.star, color: Colorutil.color),
-                        Icon(Icons.star, color: Colorutil.color),
-                        Icon(Icons.star, color: Colorutil.color),
-                        Icon(Icons.star, color: Colorutil.color),
-                        Icon(Icons.star_border, color: Colorutil.color),
-                        const SizedBox(width: 6),
-                        Text(
-                          '4.0',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: Stringutil.content,
-                            fontWeight: FontWeight.bold,
+          body: SingleChildScrollView( // 👈 added scroll view
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /// 🔹 Top Section
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Iconbtn(
+                            color: Colors.grey.shade700,
+                            action: () {
+                              Get.back();
+                            },
+                            icon: Icons.arrow_back,
                           ),
-                        ),
-                        const SizedBox(width: 6),
-                        const Text(
-                          '(Rating 100+)',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
+                          Iconbtn(
+                            color: Colors.grey.shade700,
+                            action: () {
+                              Get.to(() => Cartscreen());
+                            },
+                            icon: Icons.trolley,
                           ),
+                        ],
+                      ),
+                      const SizedBox(height: 14),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.asset(
+                          AssetUtil.continental,
+                          height: 200,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        'Continental Bites Resturant',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: Stringutil.headingsize,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.star, color: Colorutil.color),
+                          Icon(Icons.star, color: Colorutil.color),
+                          Icon(Icons.star, color: Colorutil.color),
+                          Icon(Icons.star, color: Colorutil.color),
+                          Icon(Icons.star_border, color: Colorutil.color),
+                          const SizedBox(width: 6),
+                          Text(
+                            '4.0',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: Stringutil.content,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(width: 6),
+                          const Text(
+                            '(Rating 100+)',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
 
-              Expanded(
-                child: Container(
+                /// 🔹 Bottom Section with menu
+                Container(
                   width: double.infinity,
                   decoration: const BoxDecoration(
                     color: Color.fromARGB(158, 235, 229, 229),
@@ -115,19 +120,19 @@ class ContinentalBitesResturant extends StatelessWidget {
                       topRight: Radius.circular(20),
                     ),
                   ),
-                  child: SingleChildScrollView(
+                  child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        /// Search Field
                         TextField(
                           onChanged: (value) {
                             menuController.updateSearch(value);
                           },
                           decoration: InputDecoration(
                             hintText: "Search anything from menu",
-                            prefixIcon: Icon(Icons.search),
-
+                            prefixIcon: const Icon(Icons.search),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(18),
                             ),
@@ -135,14 +140,15 @@ class ContinentalBitesResturant extends StatelessWidget {
                         ),
                         const SizedBox(height: 16),
 
+                        /// Popular Section
                         Row(
-                          children: [
-                            const Icon(
+                          children: const [
+                            Icon(
                               Icons.local_fire_department_sharp,
                               color: Color.fromARGB(255, 184, 16, 4),
                             ),
-                            const SizedBox(width: 7),
-                            const Text(
+                            SizedBox(width: 7),
+                            Text(
                               'Popular',
                               style: TextStyle(
                                 color: Colors.black,
@@ -187,9 +193,8 @@ class ContinentalBitesResturant extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         ClipRRect(
-                                          borderRadius: BorderRadius.circular(
-                                            12,
-                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
                                           child: Image.asset(
                                             item.image,
                                             height: 90,
@@ -240,7 +245,6 @@ class ContinentalBitesResturant extends StatelessWidget {
                                                 timeInSecForIosWeb: 1,
                                                 backgroundColor:
                                                     Colorutil.color,
-
                                                 textColor: Colors.white,
                                                 fontSize: 16.0,
                                               );
@@ -250,8 +254,8 @@ class ContinentalBitesResturant extends StatelessWidget {
                                               foregroundColor: Colors.white,
                                               padding:
                                                   const EdgeInsets.symmetric(
-                                                    vertical: 6,
-                                                  ),
+                                                vertical: 6,
+                                              ),
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(8),
@@ -276,6 +280,7 @@ class ContinentalBitesResturant extends StatelessWidget {
                         ),
                         const SizedBox(height: 12),
 
+                        /// Menu Section
                         Row(
                           children: [
                             Icon(
@@ -334,7 +339,6 @@ class ContinentalBitesResturant extends StatelessWidget {
                                       gravity: ToastGravity.CENTER,
                                       timeInSecForIosWeb: 1,
                                       backgroundColor: Colorutil.color,
-
                                       textColor: Colors.white,
                                       fontSize: 16.0,
                                     );
@@ -354,8 +358,8 @@ class ContinentalBitesResturant extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

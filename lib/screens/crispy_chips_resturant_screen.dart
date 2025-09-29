@@ -24,90 +24,93 @@ class CrispyChipsResturantScreen extends StatelessWidget {
     return SafeArea(
       child: GestureDetector(
         onTap: () {
-          FocusScope.of(context).unfocus();
+          FocusScope.of(context).unfocus(); // 👈 tap outside to dismiss keyboard
         },
         child: Scaffold(
           backgroundColor: Colors.white,
-          resizeToAvoidBottomInset: true, // 👈 important
+          resizeToAvoidBottomInset: true, // 👈 important for keyboard
 
-          body: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Iconbtn(
-                          color: Colors.grey.shade700,
-                          action: () {
-                            Get.back();
-                          },
-                          icon: Icons.arrow_back,
-                        ),
-                        Iconbtn(
-                          color: Colors.grey.shade700,
-                          action: () {
-                            Get.to(() => Cartscreen());
-                          },
-                          icon: Icons.trolley,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 14),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Image.asset(
-                        AssetUtil.crispychips,
-                        height: 200,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      'Crispy Chips Corner',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: Stringutil.headingsize,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.star, color: Colorutil.color),
-                        Icon(Icons.star, color: Colorutil.color),
-                        Icon(Icons.star, color: Colorutil.color),
-                        Icon(Icons.star_border, color: Colorutil.color),
-                        Icon(Icons.star_border, color: Colorutil.color),
-                        const SizedBox(width: 6),
-                        Text(
-                          '3.5',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: Stringutil.content,
-                            fontWeight: FontWeight.bold,
+          body: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                // 🔹 Top Section (Back + Cart + Image + Rating)
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Iconbtn(
+                            color: Colors.grey.shade700,
+                            action: () {
+                              Get.back();
+                            },
+                            icon: Icons.arrow_back,
                           ),
-                        ),
-                        const SizedBox(width: 6),
-                        const Text(
-                          '(Rating 100+)',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
+                          Iconbtn(
+                            color: Colors.grey.shade700,
+                            action: () {
+                              Get.to(() => Cartscreen());
+                            },
+                            icon: Icons.trolley,
                           ),
+                        ],
+                      ),
+                      const SizedBox(height: 14),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.asset(
+                          AssetUtil.crispychips,
+                          height: 200,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        'Crispy Chips Corner',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: Stringutil.headingsize,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.star, color: Colorutil.color),
+                          Icon(Icons.star, color: Colorutil.color),
+                          Icon(Icons.star, color: Colorutil.color),
+                          Icon(Icons.star_border, color: Colorutil.color),
+                          Icon(Icons.star_border, color: Colorutil.color),
+                          const SizedBox(width: 6),
+                          Text(
+                            '3.5',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: Stringutil.content,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(width: 6),
+                          const Text(
+                            '(Rating 100+)',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
 
-              Expanded(
-                child: Container(
+                // 🔹 Bottom Section (Search + Popular + Menu)
+                Container(
                   width: double.infinity,
                   decoration: const BoxDecoration(
                     color: Color.fromARGB(158, 235, 229, 229),
@@ -116,35 +119,35 @@ class CrispyChipsResturantScreen extends StatelessWidget {
                       topRight: Radius.circular(20),
                     ),
                   ),
-                  child: SingleChildScrollView(
+                  child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        // Search bar
                         TextField(
                           onChanged: (value) {
                             menuController.updateSearch(value);
                           },
                           decoration: InputDecoration(
                             hintText: "Search anything from menu",
-                            prefixIcon: Icon(Icons.search),
-
+                            prefixIcon: const Icon(Icons.search),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(18),
                             ),
                           ),
                         ),
-
                         const SizedBox(height: 16),
 
+                        // Popular
                         Row(
-                          children: [
-                            const Icon(
+                          children: const [
+                            Icon(
                               Icons.local_fire_department_sharp,
                               color: Color.fromARGB(255, 184, 16, 4),
                             ),
-                            const SizedBox(width: 7),
-                            const Text(
+                            SizedBox(width: 7),
+                            Text(
                               'Popular',
                               style: TextStyle(
                                 color: Colors.black,
@@ -164,6 +167,7 @@ class CrispyChipsResturantScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 12),
 
+                        // Popular horizontal list
                         SizedBox(
                           height: 230,
                           child: Obx(
@@ -189,9 +193,8 @@ class CrispyChipsResturantScreen extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         ClipRRect(
-                                          borderRadius: BorderRadius.circular(
-                                            12,
-                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
                                           child: Image.asset(
                                             item.image,
                                             height: 90,
@@ -242,7 +245,6 @@ class CrispyChipsResturantScreen extends StatelessWidget {
                                                 timeInSecForIosWeb: 1,
                                                 backgroundColor:
                                                     Colorutil.color,
-
                                                 textColor: Colors.white,
                                                 fontSize: 16.0,
                                               );
@@ -252,8 +254,8 @@ class CrispyChipsResturantScreen extends StatelessWidget {
                                               foregroundColor: Colors.white,
                                               padding:
                                                   const EdgeInsets.symmetric(
-                                                    vertical: 6,
-                                                  ),
+                                                vertical: 6,
+                                              ),
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(8),
@@ -278,12 +280,11 @@ class CrispyChipsResturantScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 12),
 
+                        // Menu
                         Row(
                           children: [
-                            Icon(
-                              Icons.restaurant_menu_sharp,
-                              color: Colorutil.color,
-                            ),
+                            Icon(Icons.restaurant_menu_sharp,
+                                color: Colorutil.color),
                             const SizedBox(width: 7),
                             const Text(
                               'Menu',
@@ -297,6 +298,7 @@ class CrispyChipsResturantScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 12),
 
+                        // Menu List
                         Obx(
                           () => ListView.separated(
                             physics: const NeverScrollableScrollPhysics(),
@@ -336,7 +338,6 @@ class CrispyChipsResturantScreen extends StatelessWidget {
                                       gravity: ToastGravity.CENTER,
                                       timeInSecForIosWeb: 1,
                                       backgroundColor: Colorutil.color,
-
                                       textColor: Colors.white,
                                       fontSize: 16.0,
                                     );
@@ -356,8 +357,8 @@ class CrispyChipsResturantScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

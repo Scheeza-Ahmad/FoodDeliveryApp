@@ -29,10 +29,11 @@ class RoseGardenResturantScreen extends StatelessWidget {
         },
         child: Scaffold(
           backgroundColor: Colors.white,
-          resizeToAvoidBottomInset: true, // 👈 important
+          resizeToAvoidBottomInset: false, // ✅ FIXED
 
           body: Column(
             children: [
+              // 🔹 Top Section
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
@@ -109,6 +110,7 @@ class RoseGardenResturantScreen extends StatelessWidget {
                 ),
               ),
 
+              // 🔹 Menu Section
               Expanded(
                 child: Container(
                   width: double.infinity,
@@ -124,14 +126,14 @@ class RoseGardenResturantScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        // 🔍 Search Field
                         TextField(
                           onChanged: (value) {
                             menuController.updateSearch(value);
                           },
                           decoration: InputDecoration(
                             hintText: "Search anything from menu",
-                            prefixIcon: Icon(Icons.search),
-
+                            prefixIcon: const Icon(Icons.search),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(18),
                             ),
@@ -140,6 +142,7 @@ class RoseGardenResturantScreen extends StatelessWidget {
 
                         const SizedBox(height: 16),
 
+                        // 🔥 Popular Section
                         Row(
                           children: [
                             const Icon(
@@ -174,7 +177,8 @@ class RoseGardenResturantScreen extends StatelessWidget {
                               scrollDirection: Axis.horizontal,
                               itemCount: menuController.filteredItems.length,
                               itemBuilder: (context, index) {
-                                var item = menuController.filteredItems[index];
+                                var item =
+                                    menuController.filteredItems[index];
                                 return Card(
                                   elevation: 4,
                                   margin: const EdgeInsets.symmetric(
@@ -245,7 +249,6 @@ class RoseGardenResturantScreen extends StatelessWidget {
                                                 timeInSecForIosWeb: 1,
                                                 backgroundColor:
                                                     Colorutil.color,
-
                                                 textColor: Colors.white,
                                                 fontSize: 16.0,
                                               );
@@ -255,8 +258,8 @@ class RoseGardenResturantScreen extends StatelessWidget {
                                               foregroundColor: Colors.white,
                                               padding:
                                                   const EdgeInsets.symmetric(
-                                                    vertical: 6,
-                                                  ),
+                                                vertical: 6,
+                                              ),
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(8),
@@ -282,6 +285,7 @@ class RoseGardenResturantScreen extends StatelessWidget {
 
                         const SizedBox(height: 12),
 
+                        // 🍴 Full Menu Section
                         Row(
                           children: [
                             Icon(
@@ -307,7 +311,8 @@ class RoseGardenResturantScreen extends StatelessWidget {
                             shrinkWrap: true,
                             itemCount: menuController.filteredItems.length,
                             itemBuilder: (context, index) {
-                              var item = menuController.filteredItems[index];
+                              var item =
+                                  menuController.filteredItems[index];
                               return ListTile(
                                 leading: ClipRRect(
                                   borderRadius: BorderRadius.circular(14),
@@ -336,11 +341,11 @@ class RoseGardenResturantScreen extends StatelessWidget {
                                   action: () {
                                     cartController.addToCart(item);
                                     Fluttertoast.showToast(
-                                      msg: '${item.name} added successfully',
+                                      msg:
+                                          '${item.name} added successfully',
                                       gravity: ToastGravity.CENTER,
                                       timeInSecForIosWeb: 1,
                                       backgroundColor: Colorutil.color,
-
                                       textColor: Colors.white,
                                       fontSize: 16.0,
                                     );
