@@ -25,12 +25,11 @@ class RoseGardenResturantScreen extends StatelessWidget {
     return SafeArea(
       child: GestureDetector(
         onTap: () {
-          FocusScope.of(context).unfocus();
+          FocusScope.of(context).unfocus(); // keyboard dismiss on tap
         },
         child: Scaffold(
           backgroundColor: Colors.white,
-          resizeToAvoidBottomInset: false, // ✅ FIXED
-
+          resizeToAvoidBottomInset: true, // ✅ FIXED
           body: Column(
             children: [
               // 🔹 Top Section
@@ -58,7 +57,6 @@ class RoseGardenResturantScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 14),
-
                     ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Image.asset(
@@ -69,7 +67,6 @@ class RoseGardenResturantScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-
                     Text(
                       'Rose Garden Resturant',
                       textAlign: TextAlign.center,
@@ -177,8 +174,7 @@ class RoseGardenResturantScreen extends StatelessWidget {
                               scrollDirection: Axis.horizontal,
                               itemCount: menuController.filteredItems.length,
                               itemBuilder: (context, index) {
-                                var item =
-                                    menuController.filteredItems[index];
+                                var item = menuController.filteredItems[index];
                                 return Card(
                                   elevation: 4,
                                   margin: const EdgeInsets.symmetric(
@@ -196,9 +192,8 @@ class RoseGardenResturantScreen extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         ClipRRect(
-                                          borderRadius: BorderRadius.circular(
-                                            12,
-                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
                                           child: Image.asset(
                                             item.image,
                                             height: 90,
@@ -247,8 +242,7 @@ class RoseGardenResturantScreen extends StatelessWidget {
                                                     '${item.name} added successfully',
                                                 gravity: ToastGravity.CENTER,
                                                 timeInSecForIosWeb: 1,
-                                                backgroundColor:
-                                                    Colorutil.color,
+                                                backgroundColor: Colorutil.color,
                                                 textColor: Colors.white,
                                                 fontSize: 16.0,
                                               );
@@ -311,8 +305,7 @@ class RoseGardenResturantScreen extends StatelessWidget {
                             shrinkWrap: true,
                             itemCount: menuController.filteredItems.length,
                             itemBuilder: (context, index) {
-                              var item =
-                                  menuController.filteredItems[index];
+                              var item = menuController.filteredItems[index];
                               return ListTile(
                                 leading: ClipRRect(
                                   borderRadius: BorderRadius.circular(14),
